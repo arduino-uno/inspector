@@ -1,3 +1,3 @@
-# Marine Inspector (<i>Ahli Ukur Kapal</i>)
+## Marine Inspector
 
 inspector - Sistem Informasi Ahli Ukur Kapal (Marine Inspector)
