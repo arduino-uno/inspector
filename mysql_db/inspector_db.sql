@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 02, 2022 at 09:54 AM
+-- Generation Time: Jun 04, 2022 at 02:25 AM
 -- Server version: 10.4.25-MariaDB-1:10.4.25+maria~bionic
 -- PHP Version: 7.4.29
 
@@ -63,7 +63,6 @@ INSERT INTO `anggota_tbl` (`NO`, `no_urut`, `kode_auk`, `tipe_auk`, `NIP`, `nama
 CREATE TABLE `ditolak_tbl` (
   `NO` int(11) NOT NULL,
   `kode_auk` varchar(20) NOT NULL,
-  `tgl_register` timestamp NULL DEFAULT NULL,
   `alasan` text NOT NULL,
   `tgl_penolakan` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -72,9 +71,9 @@ CREATE TABLE `ditolak_tbl` (
 -- Dumping data for table `ditolak_tbl`
 --
 
-INSERT INTO `ditolak_tbl` (`NO`, `kode_auk`, `tgl_register`, `alasan`, `tgl_penolakan`) VALUES
-(1, 'A20221234', '2022-06-02 02:51:50', 'Test', '2022-06-02 02:52:59'),
-(2, 'A20221234', '2022-06-02 02:52:00', 'Test', '2022-06-02 02:52:59');
+INSERT INTO `ditolak_tbl` (`NO`, `kode_auk`, `alasan`, `tgl_penolakan`) VALUES
+(1, 'A20220001', 'Test', '2022-06-02 02:52:59'),
+(2, 'A20220002', 'Test #2', '2022-06-03 18:50:47');
 
 -- --------------------------------------------------------
 
@@ -139,13 +138,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `anggota_tbl`
 --
 ALTER TABLE `anggota_tbl`
-  MODIFY `NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ditolak_tbl`
 --
 ALTER TABLE `ditolak_tbl`
-  MODIFY `NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
