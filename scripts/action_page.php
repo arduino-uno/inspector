@@ -1,6 +1,9 @@
 <?php
 error_reporting(0);
-require('../config/config.inc.php');
+require('../config/db_config.php');
+require('../scripts/functions_lib.php');
+
+$connect_db = getConnection();
 
 if(isset($_POST['submit']))
 {
@@ -62,7 +65,7 @@ if(isset($_POST['submit']))
         session_start();
   			$_SESSION['message'] = "Error: " . $sql . ":-" . mysqli_error($conn);
         header('location: ../media.php?module=form-registrasi');
-        
+
      }
      mysqli_close($conn);
 

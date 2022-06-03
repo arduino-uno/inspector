@@ -259,6 +259,7 @@ if (!$AVAILABLE_PAGES[$module]) {
                   <p>Dashboard v1</p>
                 </a>
               </li>
+							<li class="nav-header">Form & DataTables</li>
               <li class="nav-item">
                 <a href="./media.php?module=form-registrasi" class="nav-link">
                   <i class="fas fa-pencil-alt nav-icon"></i>
@@ -296,6 +297,26 @@ if (!$AVAILABLE_PAGES[$module]) {
       require( './modules/form_registrasi.php' );
 	}
   ?>
+	<div class="modal fade" id="delete_anggota_modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Confirmation</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure want to delete this entry?</p>
+				</div>
+				<div class="modal-footer justify-content-end">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" onclick="delete_row_anggota()">Delete</button>
+					<input type="hidden" id="hidden_anggota_id">
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="modal fade" id="delete_ditolak_modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -306,7 +327,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 					</button>
 				</div>
 				<div class="modal-body">
-					<p>Are you sure want to delete this user?</p>
+					<p>Are you sure want to delete this entry?</p>
 				</div>
 				<div class="modal-footer justify-content-end">
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
@@ -538,7 +559,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
 										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
 										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Ditolak"><i class="fas fa-times-circle"></i></button>' +
-										 	'<button type="button" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
+										 	'<button type="button" onclick="confirm_del_anggota(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
 										'</div>';
 					}
 				}],
@@ -614,11 +635,39 @@ if (!$AVAILABLE_PAGES[$module]) {
 
   });
 
+	function confirm_del_anggota(kode) {
+		// Add Member ID to the hidden field for furture usage
+	    $("#hidden_anggota_id").val(kode);
+		// Open modal popup
+	    $("#delete_anggota_modal").modal("show");
+	}
+
 	function confirm_del_ditolak(kode) {
-		// Add User ID to the hidden field for furture usage
+		// Add Rejection ID to the hidden field for furture usage
 	    $("#hidden_ditolak_id").val(kode);
 		// Open modal popup
 	    $("#delete_ditolak_modal").modal("show");
+	}
+
+	function delete_row_anggota() {
+		// get hidden field value
+    var no_id = $("#hidden_anggota_id").val();
+
+		$.ajax({
+        method: 'POST',
+        url: './scripts/actions_lib.php',
+        data: { table:'anggota_tbl', aksi: 'hapus', kode: no_id },
+				datatype: 'json',
+				success: function (response) {
+						if ( response == true ) {
+								alert("Data telah dihapus!");
+						} else {
+								alert("Data gagal dihapus!");
+						}
+						$("#delete_anggota_modal").modal("hide");
+						window.location.href = 'media.php?module=datatables';
+				}
+		});
 	}
 
 	function delete_row_ditolak() {
@@ -627,18 +676,17 @@ if (!$AVAILABLE_PAGES[$module]) {
 
 		$.ajax({
         method: 'POST',
-        url: './ajax/deleteUser.php',
-        data: { kode: no_id },
+        url: './scripts/actions_lib.php',
+        data: { table:'ditolak_tbl', aksi:'hapus', kode:no_id },
 				datatype: 'json',
-				success: function (data) {
+				success: function (response) {
+						if ( response == true ) {
+								alert("Data telah dihapus!");
+						} else {
+								alert("Data gagal dihapus!");
+						}
 						$("#delete_ditolak_modal").modal("hide");
-						toastr.options.closeButton = true;
-						toastr.options.positionClass = 'toast-top-right';
-						toastr.options.showDuration = 1500;
-						toastr['success'](data,'Koperasi Simpan Pinjam');
-						setTimeout(function() {
-							window.location.href = 'media.php?page=users';
-						}.bind(this), 1500);
+						window.location.href = 'media.php?module=datatables';
 				}
 		});
 	}

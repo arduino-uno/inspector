@@ -1,7 +1,9 @@
 <?php
 error_reporting(0);
-require('./config/config.inc.php');
-global $conn;
+require('./config/db_config.php');
+require('./scripts/functions_lib.php');
+
+$connect_db = getConnection();
 
 $username = isset($_POST['username']) ? filter_var( $_POST['username'], FILTER_SANITIZE_STRING ) : '';
 $password = isset($_POST['password']) ? filter_var( $_POST['password'], FILTER_SANITIZE_STRING ) : '';
