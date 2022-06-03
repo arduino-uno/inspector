@@ -1,0 +1,51 @@
+if(is_admin() && isset($_POST) && $_POST["nonce"] === getNonce('del-user')){
+    // get user id
+	$uid = nice_addslashes($_POST['uid']);
+	$uid = htmlspecialchars($uid);
+
+	if (deleteUser($uid)) {
+		echo "Successfully Deleted";
+	} else {
+		echo "Error while deleting user";
+	}
+}
+
+function deleteUser($uid) {
+	global $con;
+	$query = "DELETE FROM users WHERE ID = '$uid'";
+	if ($req = mysqli_query($con,$query)) {
+		addActivityLog("User Deleted");
+     	return true;
+	} else
+	  return false;
+}
+
+*Marine Inspector Database Management*
+```
+- Extract 'adminLTE-send.zip' ke folder '/var/www/html/' atau htdocs
+- import database 'inspector_db.sql' (ada di folder 'mysql_db') ke MySQL
+- jalankan adminLTE pada localhost
+```
+
+SET @counter=0;
+SELECT @counter := @counter+1 AS number, a.kode_auk, a.alasan, b.NIP, b.nama_lengkap, b.email
+FROM `ditolak_tbl` a, `anggota_tbl` b
+WHERE a.kode_auk = b.kode_auk;
+
+
+const url = window.location.href;
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('module');
+
+// $('ul.nav.nav-treeview li.nav-item a.nav-link').addClass('active');
+//let href = $('ul.nav.nav-treeview li.nav-item a.nav-link').attr('href');
+//console.log(href);
+alert( $('ul.nav.nav-treeview li.nav-item a.nav-link').attr('href') );
+$('ul.nav.nav-treeview li.nav-item').each(function() {
+
+    if ( $('li.nav-item a').attr('href') == url.includes(myParam) ) {
+        $('li.nav-item a.nav-link').addClass('active');
+    }
+
+
+});
