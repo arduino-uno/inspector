@@ -23,15 +23,14 @@ switch ($aksi) {
 
 function reject_anggota_row($table_id, $alasan) {
     global $conn;
-    $query = "INSERT INTO `ditolak_tbl` (`NO`,
-                        `kode_auk`,
-                        `alasan`,
-                        `tgl_penolakan`)
-                  VALUES (NULL,
-                        '$table_id',
-                        '$alasan')";
+    $query = "INSERT INTO ditolak_tbl (NO,
+                                  kode_auk,
+                                  alasan)
+                          VALUES (NULL,
+                                  '$table_id',
+                                  '$alasan')";
 
-    if ($req = mysqli_query( $conn, $query ) ) {
+    if ( $req = mysqli_query( $conn, $query ) ) {
         return true;
     } else
       return false;

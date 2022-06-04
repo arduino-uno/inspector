@@ -28,7 +28,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="member_data" class="table table-bordered table-striped">
+              <table id="member_data" class="table table-active table-bordered table-striped">
                 <thead>
       						<tr>
       							<th width="40" style="text-align: center;">#</th>
@@ -65,7 +65,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="tolak_data" class="table table-bordered table-striped">
+              <table id="tolak_data" class="table table-primary table-bordered table-striped">
                 <thead>
       						<tr>
       							<th width="40" style="text-align: center;">#</th>

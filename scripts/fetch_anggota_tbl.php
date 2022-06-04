@@ -9,17 +9,24 @@ $conn->getConnection();
 
 $output = array();
 $rows = Array();
-$query = "SELECT * FROM anggota_tbl ";
+
+$query = 'SELECT kode_auk,
+              tgl_register,
+              NIP,
+              nama_lengkap,
+              email
+        FROM anggota_tbl ';
 
   if ( isset( $_POST["search"]["value"] ) ) {
-  	$query .= 'WHERE nama_lengkap LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'WHERE kode_auk NOT IN (SELECT b.kode_auk FROM ditolak_tbl b) ';
+    $query .= 'AND nama_lengkap LIKE "%'.$_POST["search"]["value"].'%" ';
   	$query .= 'OR email LIKE "%'.$_POST["search"]["value"].'%" ';
   }
 
   if ( isset( $_POST["order"] ) ) {
-  	$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+  	$query .= 'ORDER BY kode_auk AND '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
   } else {
-  	$query .= 'ORDER BY NO ASC';
+  	$query .= 'GROUP BY kode_auk ASC ';
   }
 
   if ( isset( $_POST["length"] ) && $_POST["length"] != -1 ) {
