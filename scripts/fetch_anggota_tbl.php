@@ -29,10 +29,11 @@ $query = "SELECT * FROM anggota_tbl ";
 $result = $conn->get_sql_exec( $query );
 $rows = json_decode( $result, true );
 
+  $i = 1;
 	foreach( $rows as $row ) {
 
 		$sub_array = array();
-		$sub_array[] = $row["NO"];
+		$sub_array[] = $i;
     $sub_array[] = $row["kode_auk"];
     $sub_array[] = $row["tgl_register"];
 		$sub_array[] = $row["NIP"];
@@ -40,7 +41,7 @@ $rows = json_decode( $result, true );
 		$sub_array[] = $row["email"];
 
 		$data[] = $sub_array;
-
+    $i++;
 	}
 
   $filtered_rows = count( $rows );

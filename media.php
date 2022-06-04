@@ -297,9 +297,32 @@ if (!$AVAILABLE_PAGES[$module]) {
       require( './modules/form_registrasi.php' );
 	}
   ?>
+	<div class="modal fade" id="reject_anggota_modal">
+		<div class="modal-dialog">
+			<div class="modal-content bg-secondary">
+				<div class="modal-header">
+					<h4 class="modal-title">Rejection Confirmation</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Anda yakin akan menolak anggota ini?</p>
+					<p>
+						<textarea name="txt_alasan" id="txt_alasan" rows="4" cols="50" placeholder="Ketik alasan penolakan .."></textarea>
+					</p>
+				</div>
+				<div class="modal-footer justify-content-end">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" onclick="reject_anggota()">Reject</button>
+					<input type="hidden" id="hidden_anggota_id">
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="modal fade" id="delete_anggota_modal">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content bg-secondary">
 				<div class="modal-header">
 					<h4 class="modal-title">Delete Confirmation</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -319,7 +342,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 	</div>
 	<div class="modal fade" id="delete_ditolak_modal">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content bg-secondary">
 				<div class="modal-header">
 					<h4 class="modal-title">Delete Confirmation</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -340,7 +363,7 @@ if (!$AVAILABLE_PAGES[$module]) {
   <!-- /.content-wrapper -->
 	<div class="modal fade" id="logout_modal">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content bg-secondary">
 				<div class="modal-header">
 					<h4 class="modal-title">Logout Confirmation</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -552,13 +575,13 @@ if (!$AVAILABLE_PAGES[$module]) {
 						return '<a href="mailto:' + data + '">' + data + '</a>';
 					}
 				},{
-					data: null,
+					data: 1,
 					targets:-1,
 					render: function(data,type,full,meta) {
 						return '<div class="btn-group" role="group">' +
 										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
 										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
-										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Ditolak"><i class="fas fa-times-circle"></i></button>' +
+										  '<button type="button" onclick="confirm_ditolak(\'' + data + '\')" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Ditolak"><i class="fas fa-times-circle"></i></button>' +
 										 	'<button type="button" onclick="confirm_del_anggota(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
 										'</div>';
 					}
@@ -614,7 +637,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 						return '<a href="mailto:' + data + '">' + data + '</a>';
 					}
 				},{
-					data: 0,
+					data: 1,
 					targets:-1,
 					render: function(data,type,full,meta) {
 						return '<div class="btn-group" role="group">' +
@@ -635,39 +658,70 @@ if (!$AVAILABLE_PAGES[$module]) {
 
   });
 
+	function confirm_ditolak(kode) {
+			// Add Member ID to the hidden field for furture usage
+			$("#hidden_anggota_id").val(kode);
+			// Open modal popup
+			$("#reject_anggota_modal").modal("show");
+	}
+
+	function reject_anggota() {
+			// get hidden field value
+			var no_id = $("#hidden_anggota_id").val();
+			var txt_alasan = $("#txt_alasan").text();
+
+			alert(txt_alasan);
+
+			$.ajax({
+					method: 'POST',
+					url: './scripts/actions_lib.php',
+					data: { aksi: 'reject', kode: no_id, alasan:txt_alasan  },
+					datatype: 'json',
+					success: function (response) {
+							if ( response == true ) {
+									alert("Aksi penolakan berhasil!");
+							} else {
+									alert("Aksi penolakan gagal!");
+							}
+							$("#reject_anggota_modal").modal("hide");
+							window.location.href = 'media.php?module=datatables';
+					}
+			});
+	}
+
 	function confirm_del_anggota(kode) {
-		// Add Member ID to the hidden field for furture usage
+			// Add Member ID to the hidden field for furture usage
 	    $("#hidden_anggota_id").val(kode);
-		// Open modal popup
+			// Open modal popup
 	    $("#delete_anggota_modal").modal("show");
 	}
 
 	function confirm_del_ditolak(kode) {
-		// Add Rejection ID to the hidden field for furture usage
+			// Add Rejection ID to the hidden field for furture usage
 	    $("#hidden_ditolak_id").val(kode);
-		// Open modal popup
+			// Open modal popup
 	    $("#delete_ditolak_modal").modal("show");
 	}
 
 	function delete_row_anggota() {
-		// get hidden field value
-    var no_id = $("#hidden_anggota_id").val();
+			// get hidden field value
+	    var no_id = $("#hidden_anggota_id").val();
 
-		$.ajax({
-        method: 'POST',
-        url: './scripts/actions_lib.php',
-        data: { table:'anggota_tbl', aksi: 'hapus', kode: no_id },
-				datatype: 'json',
-				success: function (response) {
-						if ( response == true ) {
-								alert("Data telah dihapus!");
-						} else {
-								alert("Data gagal dihapus!");
-						}
-						$("#delete_anggota_modal").modal("hide");
-						window.location.href = 'media.php?module=datatables';
-				}
-		});
+			$.ajax({
+	        method: 'POST',
+	        url: './scripts/actions_lib.php',
+	        data: { table:'anggota_tbl', aksi: 'hapus', kode: no_id },
+					datatype: 'json',
+					success: function (response) {
+							if ( response == true ) {
+									alert("Data telah dihapus!");
+							} else {
+									alert("Data gagal dihapus!");
+							}
+							$("#delete_anggota_modal").modal("hide");
+							window.location.href = 'media.php?module=datatables';
+					}
+			});
 	}
 
 	function delete_row_ditolak() {
