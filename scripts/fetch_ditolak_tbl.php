@@ -9,19 +9,24 @@ $conn->getConnection();
 
 $output = array();
 $rows = Array();
-
-$query = 'SELECT kode_auk, tgl_register, NIP, nama_lengkap, email FROM anggota_tbl ';
+$query = "SELECT a.kode_auk,
+              a.tgl_penolakan,
+              a.alasan,
+              b.NIP,
+              b.nama_lengkap,
+              b.email
+        FROM ditolak_tbl a, anggota_tbl b ";
 
   if ( isset( $_POST["search"]["value"] ) ) {
-    $query .= 'WHERE kode_auk NOT IN (SELECT a.kode_auk FROM disetujui_tbl a) AND kode_auk NOT IN (SELECT b.kode_auk FROM ditolak_tbl b) ';
-    $query .= 'AND nama_lengkap LIKE "%'.$_POST["search"]["value"].'%" ';
-  	// $query .= 'OR email LIKE "%'.$_POST["search"]["value"].'%" ';
+  	$query .= 'WHERE a.kode_auk = b.kode_auk ';
+    $query .= 'AND b.nama_lengkap LIKE "%'.$_POST["search"]["value"].'%" ';
+  	// $query .= 'OR b.email LIKE "%'.$_POST["search"]["value"].'%" ';
   }
 
   if ( isset( $_POST["order"] ) ) {
-  	$query .= 'ORDER BY kode_auk AND '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
+  	$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
   } else {
-  	$query .= 'GROUP BY kode_auk ASC ';
+  	$query .= 'ORDER BY kode_auk ASC';
   }
 
   if ( isset( $_POST["length"] ) && $_POST["length"] != -1 ) {
@@ -35,19 +40,20 @@ $rows = json_decode( $result, true );
 	foreach( $rows as $row ) {
 
 		$sub_array = array();
-		$sub_array[] = $i;
+    $sub_array[] = $i;
     $sub_array[] = $row["kode_auk"];
-    $sub_array[] = $row["tgl_register"];
+    $sub_array[] = $row["tgl_penolakan"];
 		$sub_array[] = $row["NIP"];
 		$sub_array[] = $row["nama_lengkap"];
 		$sub_array[] = $row["email"];
+    $sub_array[] = $row["alasan"];
 
 		$data[] = $sub_array;
     $i++;
 	}
 
   $filtered_rows = count( $rows );
-  $rows_cnt = $conn->get_total_all_records( "anggota_tbl" );
+  $rows_cnt = $conn->get_total_all_records( "ditolak_tbl" );
 
 	$output = array(
 		"draw"						=>	( isset( $_POST["draw"] ) ? intval( $_POST["draw"] ) : 0 ),

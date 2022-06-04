@@ -11,6 +11,10 @@ $kode = isset( $_POST['kode'] ) ? filter_var( $_POST['kode'], FILTER_SANITIZE_ST
 $alasan = isset( $_POST['alasan'] ) ? filter_var( $_POST['alasan'], FILTER_SANITIZE_STRING ) : '';
 
 switch ($aksi) {
+    case "accept":
+        $result = accept_anggota_row($kode);
+        echo $result;
+        break;
     case "reject":
         $result = reject_anggota_row($kode, $alasan);
         echo $result;
@@ -19,6 +23,16 @@ switch ($aksi) {
         $result = delete_table_row($table, $kode);
         echo $result;
         break;
+}
+
+function accept_anggota_row($table_id) {
+    global $conn;
+    $query = "INSERT INTO disetujui_tbl (NO, kode_auk) VALUES ( NULL, '$table_id' )";
+
+    if ( $req = mysqli_query( $conn, $query ) ) {
+        return true;
+    } else
+      return false;
 }
 
 function reject_anggota_row($table_id, $alasan) {

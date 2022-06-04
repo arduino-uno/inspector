@@ -297,6 +297,28 @@ if (!$AVAILABLE_PAGES[$module]) {
       require( './modules/form_registrasi.php' );
 	}
   ?>
+	<!-- Accept anggota modal -->
+	<div class="modal fade" id="accept_anggota_modal">
+		<div class="modal-dialog">
+			<div class="modal-content bg-secondary">
+				<div class="modal-header">
+					<h4 class="modal-title">Acception Confirmation</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Anda yakin akan menerima anggota ini?</p>
+				</div>
+				<div class="modal-footer justify-content-end">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" onclick="accept_anggota()">Accept</button>
+					<input type="hidden" id="hidden_anggota_id">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Reject anggota modal -->
 	<div class="modal fade" id="reject_anggota_modal">
 		<div class="modal-dialog">
 			<div class="modal-content bg-secondary">
@@ -320,6 +342,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 			</div>
 		</div>
 	</div>
+	<!-- Delete anggota modal -->
 	<div class="modal fade" id="delete_anggota_modal">
 		<div class="modal-dialog">
 			<div class="modal-content bg-secondary">
@@ -340,6 +363,28 @@ if (!$AVAILABLE_PAGES[$module]) {
 			</div>
 		</div>
 	</div>
+	<!-- Delete anggota disetujui modal -->
+	<div class="modal fade" id="delete_disetujui_modal">
+		<div class="modal-dialog">
+			<div class="modal-content bg-secondary">
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Confirmation</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure want to delete this entry?</p>
+				</div>
+				<div class="modal-footer justify-content-end">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" onclick="delete_row_disetujui()">Delete</button>
+					<input type="hidden" id="hidden_disetujui_id">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Delete anggota ditolak modal -->
 	<div class="modal fade" id="delete_ditolak_modal">
 		<div class="modal-dialog">
 			<div class="modal-content bg-secondary">
@@ -503,13 +548,13 @@ if (!$AVAILABLE_PAGES[$module]) {
 		         return false;
 		     }
 
-		})
+		});
 
 		function elementSetFocus( elementID ){
 		    var element = document.getElementById(elementID);
 		    element.focus();
 		    element.scrollIntoView();
-		}
+		};
 
 		function show_newId() {
 				let tipe_auk = $('#tipe_auk').val();
@@ -517,7 +562,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 				let no_urut = $('#no_urut').val();
 				let new_id = generateId(tipe_auk, tgl_periksa, no_urut);
 				$("#kode_auk").val(new_id);
-		}
+		};
 
 		function generateId(tipe, tanggal, reg_id) {
 				let tahun = new Date();
@@ -531,81 +576,128 @@ if (!$AVAILABLE_PAGES[$module]) {
 				if (reg_id == null) reg_id = "";
 
 				return tipe + tahun + reg_id;
-		}
+		};
 
-		// Activate an inline edit on click of a table cell
-	  $('#member_data').on( 'click', 'tbody td:not(:first-child)', function (e) {
-	  	editor.inline( this );
-	  } );
 		// fetch data from MySQL
 		var dataTable = $('#member_data').DataTable({
-			"processing":true,
-			"serverSide":true,
-			"order":[],
-			"ajax":{
-				url:"./scripts/fetch_anggota_tbl.php",
-				type:"POST"
-			},
-			"columnDefs":[
-				{
-					data: 0,
-					className: 'text-center',
-					targets:0,
-					orderable: true
+				"processing":true,
+				"serverSide":true,
+				"order":[],
+				"ajax":{
+						url:"./scripts/fetch_anggota_tbl.php",
+						type:"POST"
+				},
+				"columnDefs":[{
+						data: 0,
+						className: 'text-center',
+						targets:0,
+						orderable: true
+					},{
+						data: 1,
+						className: 'font-weight-bold',
+						targets:1,
+						render: function(data,type,full,meta) {
+							return data;
+						}
+					},{
+						data: 2,
+						targets:2,
+						render: function(data,type,full,meta) {
+								const event = new Date(data);
+								const options = { dateStyle: 'long' };
+								const date = event.toLocaleString('id-ID', options);
+								return date;
+						}
+					},{
+						data: 5,
+						targets:5,
+						render: function(data,type,full,meta) {
+								return '<a href="mailto:' + data + '">' + data + '</a>';
+						}
 				},{
-					data: 1,
-					className: 'font-weight-bold',
-					targets:1,
-					render: function(data,type,full,meta) {
-						return data;
-					}
-				},{
-					data: 2,
-					targets:2,
-					render: function(data,type,full,meta) {
-						const event = new Date(data);
-						const options = { dateStyle: 'long' };
-						const date = event.toLocaleString('id-ID', options);
-						return date;
-					}
-				},{
-					data: 5,
-					targets:5,
-					render: function(data,type,full,meta) {
-						return '<a href="mailto:' + data + '">' + data + '</a>';
-					}
-				},{
-					data: 1,
-					targets:-1,
-					render: function(data,type,full,meta) {
-						return '<div class="btn-group" role="group">' +
-										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
-										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
-										  '<button type="button" onclick="confirm_ditolak(\'' + data + '\')" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Ditolak"><i class="fas fa-times-circle"></i></button>' +
-										 	'<button type="button" onclick="confirm_del_anggota(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
-										'</div>';
-					}
+						data: 1,
+						targets:-1,
+						render: function(data,type,full,meta) {
+								return '<div class="btn-group" role="group">' +
+												  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
+												  '<button type="button" onclick="confirm_disetujui(\'' + data + '\')" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
+												  '<button type="button" onclick="confirm_ditolak(\'' + data + '\')" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Ditolak"><i class="fas fa-times-circle"></i></button>' +
+												 	'<button type="button" onclick="confirm_del_anggota(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
+												'</div>';
+						}
 				}],
-		    select: {
-		      style: 'os',
-		      selector: 'td:first-child'
-		    },
-		    order: [[ 1, 'asc' ]],
-		    dom: 'Blfrtip',
-		    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+			    select: {
+			    style: 'os',
+			    selector: 'td:first-child'
+			  },
+			    order: [[ 1, 'asc' ]],
+			    dom: 'Blfrtip',
+			    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
 		});
 
-		// Activate an inline edit on click of a table cell
-	  $('#tolak_data').on( 'click', 'tbody td:not(:first-child)', function (e) {
-	  	editor.inline( this );
-	  } );
 		// fetch data from MySQL
-		var dataTable = $('#tolak_data').DataTable({
+		var dataTable = $('#disetujui_data').DataTable({
+				"processing":true,
+				"serverSide":true,
+				"order":[],
+				"ajax":{
+						url:"./scripts/fetch_disetujui_tbl.php",
+						type:"POST"
+				},
+				"columnDefs":[{
+						data: 0,
+						className: 'text-center',
+						targets:0,
+						orderable: true
+				},{
+						data: 1,
+						className: 'font-weight-bold',
+						targets:1,
+						render: function(data,type,full,meta) {
+								return data;
+						}
+				},{
+						data: 2,
+						targets:2,
+						render: function(data,type,full,meta) {
+								const event = new Date(data);
+								const options = { dateStyle: 'long' };
+								const date = event.toLocaleString('id-ID', options);
+								return date;
+						}
+				},{
+						data: 5,
+						targets:5,
+						render: function(data,type,full,meta) {
+								return '<a href="mailto:' + data + '">' + data + '</a>';
+						}
+				},{
+						data: 1,
+						targets:-1,
+						render: function(data,type,full,meta) {
+								return '<div class="btn-group" role="group">' +
+												  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
+												  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
+												  '<button type="button" onclick="confirm_del_disetujui(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
+												'</div>';
+						}
+				}],
+						select: {
+			      style: 'os',
+			      selector: 'td:first-child'
+			  },
+				    order: [[ 1, 'asc' ]],
+				    dom: 'Blfrtip',
+				    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+		});
+
+		// fetch data from MySQL
+		var dataTable = $('#ditolak_data').DataTable({
 			"processing":true,
 			"serverSide":true,
 			"order":[],
 			"ajax":{
-				url:"./scripts/fetch_tolak_tbl.php",
+				url:"./scripts/fetch_ditolak_tbl.php",
 				type:"POST"
 			},
 			"columnDefs":[
@@ -619,32 +711,32 @@ if (!$AVAILABLE_PAGES[$module]) {
 					className: 'font-weight-bold',
 					targets:1,
 					render: function(data,type,full,meta) {
-						return data;
+							return data;
 					}
 				},{
 					data: 2,
 					targets:2,
 					render: function(data,type,full,meta) {
-						const event = new Date(data);
-						const options = { dateStyle: 'long' };
-						const date = event.toLocaleString('id-ID', options);
-						return date;
+							const event = new Date(data);
+							const options = { dateStyle: 'long' };
+							const date = event.toLocaleString('id-ID', options);
+							return date;
 					}
 				},{
 					data: 5,
 					targets:5,
 					render: function(data,type,full,meta) {
-						return '<a href="mailto:' + data + '">' + data + '</a>';
+							return '<a href="mailto:' + data + '">' + data + '</a>';
 					}
 				},{
 					data: 1,
 					targets:-1,
 					render: function(data,type,full,meta) {
-						return '<div class="btn-group" role="group">' +
-										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
-										  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
-										  '<button type="button" onclick="confirm_del_ditolak(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
-										'</div>';
+							return '<div class="btn-group" role="group">' +
+											  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
+											  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
+											  '<button type="button" onclick="confirm_del_ditolak(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
+											'</div>';
 					}
 				}],
 		    select: {
@@ -656,21 +748,47 @@ if (!$AVAILABLE_PAGES[$module]) {
 		    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
 		});
 
-  });
+});
+
+	function confirm_disetujui(kode) {
+			// Add Member ID to the hidden field for furture usage
+			$("#hidden_anggota_id").val(kode);
+			// Open modal popup
+			$("#accept_anggota_modal").modal("show");
+	};
 
 	function confirm_ditolak(kode) {
 			// Add Member ID to the hidden field for furture usage
 			$("#hidden_anggota_id").val(kode);
 			// Open modal popup
 			$("#reject_anggota_modal").modal("show");
-	}
+	};
+
+	function accept_anggota() {
+			// get hidden field value
+			var no_id = $("#hidden_anggota_id").val();
+
+			$.ajax({
+					method: 'POST',
+					url: './scripts/actions_lib.php',
+					data: { aksi: 'accept', kode: no_id  },
+					datatype: 'json',
+					success: function (response) {
+							if ( response == true ) {
+									alert("Aksi disetujui berhasil!");
+							} else {
+									alert("Aksi disetujui gagal!");
+							}
+							$("#accept_anggota_modal").modal("hide");
+							window.location.href = 'media.php?module=datatables';
+					}
+			});
+	};
 
 	function reject_anggota() {
 			// get hidden field value
 			var no_id = $("#hidden_anggota_id").val();
-			var txt_alasan = $("#txt_alasan").text();
-
-			alert(txt_alasan);
+			var txt_alasan = $("#txt_alasan").val();
 
 			$.ajax({
 					method: 'POST',
@@ -687,21 +805,28 @@ if (!$AVAILABLE_PAGES[$module]) {
 							window.location.href = 'media.php?module=datatables';
 					}
 			});
-	}
+	};
 
 	function confirm_del_anggota(kode) {
 			// Add Member ID to the hidden field for furture usage
 	    $("#hidden_anggota_id").val(kode);
 			// Open modal popup
 	    $("#delete_anggota_modal").modal("show");
-	}
+	};
+
+	function confirm_del_disetujui(kode) {
+			// Add Rejection ID to the hidden field for furture usage
+	    $("#hidden_disetujui_id").val(kode);
+			// Open modal popup
+	    $("#delete_disetujui_modal").modal("show");
+	};
 
 	function confirm_del_ditolak(kode) {
 			// Add Rejection ID to the hidden field for furture usage
 	    $("#hidden_ditolak_id").val(kode);
 			// Open modal popup
 	    $("#delete_ditolak_modal").modal("show");
-	}
+	};
 
 	function delete_row_anggota() {
 			// get hidden field value
@@ -722,7 +847,28 @@ if (!$AVAILABLE_PAGES[$module]) {
 							window.location.href = 'media.php?module=datatables';
 					}
 			});
-	}
+	};
+
+	function delete_row_disetujui() {
+		// get hidden field value
+    var no_id = $("#hidden_disetujui_id").val();
+
+		$.ajax({
+        method: 'POST',
+        url: './scripts/actions_lib.php',
+        data: { table:'disetujui_tbl', aksi:'hapus', kode:no_id },
+				datatype: 'json',
+				success: function (response) {
+						if ( response == true ) {
+								alert("Data telah dihapus!");
+						} else {
+								alert("Data gagal dihapus!");
+						}
+						$("#delete_disetujui_modal").modal("hide");
+						window.location.href = 'media.php?module=datatables';
+				}
+		});
+	};
 
 	function delete_row_ditolak() {
 		// get hidden field value
@@ -743,16 +889,16 @@ if (!$AVAILABLE_PAGES[$module]) {
 						window.location.href = 'media.php?module=datatables';
 				}
 		});
-	}
+	};
 
 
 	function logoutModal() {
 			$("#logout_modal").modal("show");
-	}
+	};
 
 	function confirmLogout() {
 			window.location.href = './scripts/logout.php';
-	}
+	};
 </script>
 </body>
 </html>
