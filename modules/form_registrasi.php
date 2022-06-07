@@ -17,7 +17,7 @@
     </div><!-- /.container-fluid -->
   </section>
 
-<form id="inspector" name="inspector" action="./scripts/action_page.php" method="POST">
+<form id="form_register" name="form_register" action="" method="POST">
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -53,7 +53,7 @@
               </div>
               <div class="form-group">
                 <label>NIP <span style="color:red">*</span></label>
-                <input type="text" class="form-control" name="NIP" id="NIP" placeholder="No. Induk Pegawai" required>
+                <input type="text" class="form-control" name="txt_NIP" id="txt_NIP" placeholder="No. Induk Pegawai" required>
               </div>
               <div class="form-group">
                 <label>Email <span style="color:red">*</span></label>
@@ -63,13 +63,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Password <span style="color:red">*</span></label>
-                    <input type="password" class="form-control" name="password" id="password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Password" required>
+                    <input type="password" value="passwd" class="form-control" name="password" id="password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Password" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Retype Password <span style="color:red">*</span></label>
-                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Ulang Password" required>
+                    <input type="password" value="passwd" class="form-control" name="confirm_password" id="confirm_password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Ulang Password" required>
                   </div>
                 </div>
               </div>
@@ -169,10 +169,11 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Tipe MI <span style="color:red">*</span>)</label>
+                <label>METODE PENGUKURAN <span style="color:red">*</span>)</label>
                 <select class="form-control select2bs4" name="tipe_auk" id="tipe_auk" style="width: 100%;">
-                  <option value="A">MI Tipe A</option>
-                  <option value="B">MI Tipe B</option>
+                  <option value="1">Metode Pengukuran Khusus</option>
+                  <option value="2">Metode Pengukuran Dalam Negeri</option>
+                  <option value="3">Metode Pengukuran Luar Negeri</option>
                 </select>
               </div>
               <!-- /.form-group -->
@@ -216,7 +217,7 @@
                   <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile1" name="filename">
                 </div>
              </div>
              <div class="row">
@@ -227,7 +228,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile2" name="filename">
                 </div>
             </div>
             <div class="row">
@@ -238,7 +239,7 @@
                   <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile3" name="filename">
                 </div>
             </div>
             <div class="row">
@@ -249,7 +250,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile4" name="filename">
                 </div>
             </div>
             <div class="row">
@@ -264,7 +265,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile5" name="filename">
                 </div>
             </div>
             <div class="row">
@@ -275,7 +276,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile" name="filename">
+                    <input type="file" id="myFile6" name="filename">
                 </div>
             </div>
             <!-- /.card-body -->
@@ -288,8 +289,8 @@
             <div class="row">
               <div class="col-md-6">&nbsp;</div>
               <div class="col-md-6 text-right">
-                  <input class="btn btn-warning" id="reset" type="submit" value="Reset"/>
-                  <input class="btn btn-primary" name="submit" id="submit" type="submit" value="Submit"/>
+                  <input class="btn btn-warning" id="btn_reset" type="reset" value="Reset"/>
+                  <input class="btn btn-primary" id="btn_submit" type="submit" value="Submit"/>
               </div>
             </div>
             <!-- /.row -->

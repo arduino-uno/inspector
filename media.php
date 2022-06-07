@@ -4,7 +4,6 @@ require('./config/db_config.php');
 require('./scripts/functions_lib.php');
 
 $connect_db = getConnection();
-
 session_start();
 if ( !isset($_SESSION['user_login']) ) header('location: ./login.php');
 // Sanitize $_GET parameters to avoid XSS and other attacks
@@ -13,15 +12,7 @@ $AVAILABLE_PAGES = array('dashboard',
 												'form-registrasi');
 
 $AVAILABLE_PAGES = array_fill_keys($AVAILABLE_PAGES, 1);
-
 $module = isset($_GET['module']) ? filter_var( $_GET['module'], FILTER_SANITIZE_STRING ) : '';
-$message = isset($_GET['message']);
-
-if ( $message ) {
-	 alert($_SESSION['message']);
-	 unset($_SESSION['message']);
-}
-
 if (!$AVAILABLE_PAGES[$module]) {
    header("HTTP/1.0 404 Not Found");
    readfile('404.html');
@@ -35,25 +26,29 @@ if (!$AVAILABLE_PAGES[$module]) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <link rel="stylesheet" href="./plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <!-- iCheck -->
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="./plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
-  <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
+  <link rel="stylesheet" href="./plugins/jqvmap/jqvmap.min.css">
+	<!-- SweetAlert2 -->
+  <link rel="stylesheet" href="./plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+	<!-- Toastr -->
+  <link rel="stylesheet" href="./plugins/toastr/toastr.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="./dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="./plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="./plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
-  <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="./plugins/summernote/summernote-bs4.min.css">
 	<!-- DataTables -->
 	<link rel="stylesheet" href="./plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" href="./plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -453,31 +448,35 @@ if (!$AVAILABLE_PAGES[$module]) {
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
+<script src="./plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
-<script src="plugins/sparklines/sparkline.js"></script>
+<script src="./plugins/sparklines/sparkline.js"></script>
 <!-- JQVMap -->
-<script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<script src="./plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="./plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
 <!-- jQuery Knob Chart -->
-<script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="./plugins/jquery-knob/jquery.knob.min.js"></script>
 <!-- daterangepicker -->
-<script src="plugins/moment/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
+<script src="./plugins/moment/moment.min.js"></script>
+<script src="./plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="./plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Summernote -->
-<script src="plugins/summernote/summernote-bs4.min.js"></script>
+<script src="./plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
-<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="./plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="./plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="./plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.js"></script>
+<script src="./dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+<script src="./dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
+<script src="./dist/js/pages/dashboard.js"></script>
 <!-- InputMask -->
 <script src="./plugins/moment/moment.min.js"></script>
 <script src="./plugins/inputmask/jquery.inputmask.min.js"></script>
@@ -497,6 +496,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 <!-- Page specific script -->
 <script>
   $(function () {
+
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
@@ -508,13 +508,6 @@ if (!$AVAILABLE_PAGES[$module]) {
 		$('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' });
 		//Money Euro
 		$('[data-mask]').inputmask();
-
-		//Date picker
-		/*
-    $('#tgl_lahir').datetimepicker({
-        format: 'L'
-    });
-		*/
 
 		$("#tgl_periksa").change(function(){
 				let tipe_auk = $('#tipe_auk').val();
@@ -891,6 +884,41 @@ if (!$AVAILABLE_PAGES[$module]) {
 		});
 	};
 
+	// Bind to the submit event of our form
+	$("#form_register").submit(function(event) {
+			// Prevent default posting of form - put here to work in case of errors
+			event.preventDefault();
+			// form initialized
+			var $form = $(this);
+			var serializedData = $form.serialize();
+			// setup some local variables
+	    var $form = $(this);
+	    // Let's select and cache all the fields
+	    var $inputs = $form.find("input, select, button, textarea");
+	    // Serialize the data in the form
+	    var serializedData = $form.serialize();
+	    // Let's disable the inputs for the duration of the Ajax request.
+	    // Note: we disable elements AFTER the form data has been serialized.
+	    // Disabled form elements will not be serialized.
+	    $inputs.prop("disabled", true);
+	    // Fire off the request to /form.php
+	    let request = $.ajax({
+					method: 'POST',
+	        url: './scripts/action_page.php',
+	        data: serializedData,
+					dataType: 'JSON',
+			    success: function( response ) {
+
+						if ( response == "true" ) {
+			    		toastr.success('Data Anda berhasil disimpan.');
+						} else {
+							toastr.error('Ada kendala pada server kami.');
+						}
+
+			    }
+	    });
+
+	});
 
 	function logoutModal() {
 			$("#logout_modal").modal("show");
