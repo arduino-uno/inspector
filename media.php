@@ -910,9 +910,9 @@ if (!$AVAILABLE_PAGES[$module]) {
 			    success: function( response ) {
 
 						if ( response == "true" ) {
-			    		toastr.success('Data Anda berhasil disimpan.');
+			    		alert('Data Anda berhasil disimpan.');
 						} else {
-							toastr.error('Ada kendala pada server kami.');
+							alert('Ada kendala pada server kami.');
 						}
 
 			    }

@@ -63,13 +63,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Password <span style="color:red">*</span></label>
-                    <input type="password" value="passwd" class="form-control" name="password" id="password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Password" required>
+                    <input type="password" class="form-control" name="password" id="password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Password" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Retype Password <span style="color:red">*</span></label>
-                    <input type="password" value="passwd" class="form-control" name="confirm_password" id="confirm_password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Ulang Password" required>
+                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Ulang Password" required>
                   </div>
                 </div>
               </div>
