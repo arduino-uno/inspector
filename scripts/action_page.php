@@ -2,18 +2,6 @@
 error_reporting(0);
 require('../config/db_config.php');
 require('../scripts/functions_lib.php');
-// Mail SMTP Configuration
-require('../config/mail_config.php');
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require("../phpmailer/PHPMailer.php)";
-require("../phpmailer/Exception.php)";
-require("../phpmailer/OAuth.php)";
-require("../phpmailer/OAuthTokenProvider.php)";
-require("../phpmailer/POP3.php)";
-require("../phpmailer/SMTP.php)";
 
 $connect_db = getConnection();
 
@@ -65,7 +53,6 @@ if ( isset( $_POST ) ) {
                                     '')";
 
      if ( mysqli_query($conn, $sql) ) {
-        $email_send = email_confimation( $nama_lengkap, $email, "Konfirmasi Email", "Terimakasih atas pendaftaran Anda di sintara[dot]co[dot]id" )
         echo "true";
      } else {
         echo "false";

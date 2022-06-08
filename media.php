@@ -495,7 +495,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 <script src="./plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- Page specific script -->
 <script>
-  $(function () {
+$(function () {
 
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -741,6 +741,23 @@ if (!$AVAILABLE_PAGES[$module]) {
 		    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
 		});
 
+		var $msg = email_sender("Agah Nata", "hashcat80@gmail.com", "test PHPMailer", "Test hostinger Email SMTP");
+
+		function email_sender(name, email, title, message) {
+
+				$.ajax({
+						method: 'POST',
+						url: './scripts/email_sender.php',
+						data: { fullname: name, email: email, subject: title, message: message },
+						datatype: 'json',
+						success: function (response) {
+								alert('email response!');
+						}
+
+				});
+				
+		};
+
 });
 
 	function confirm_disetujui(kode) {
@@ -927,6 +944,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 	function confirmLogout() {
 			window.location.href = './scripts/logout.php';
 	};
+
 </script>
 </body>
 </html>
