@@ -17,7 +17,7 @@
     </div><!-- /.container-fluid -->
   </section>
 
-<form id="form_register" name="form_register" action="" method="POST">
+<form id="form_register" name="form_register" method="POST" action="./scripts/action_page.php" enctype="multipart/form-data">
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -217,7 +217,7 @@
                   <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile1" name="filename">
+                    <input type="file" id="myFile1" name="filename" onChange="document.getElementById('myFile1').style.display='block';">
                 </div>
              </div>
              <div class="row">
@@ -228,7 +228,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile2" name="filename">
+                    <input type="file" id="myFile2" name="filename" onChange="document.getElementById('myFile2').style.display='block';">
                 </div>
             </div>
             <div class="row">
@@ -239,7 +239,7 @@
                   <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile3" name="filename">
+                    <input type="file" id="myFile3" name="filename" onChange="document.getElementById('myFile3').style.display='block';">
                 </div>
             </div>
             <div class="row">
@@ -250,7 +250,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile4" name="filename">
+                    <input type="file" id="myFile4" name="filename" onChange="document.getElementById('myFile4').style.display='block';">
                 </div>
             </div>
             <div class="row">
@@ -265,7 +265,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile5" name="filename">
+                    <input type="file" id="myFile5" name="filename" onChange="document.getElementById('myFile5').style.display='block';">
                 </div>
             </div>
             <div class="row">
@@ -276,7 +276,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile6" name="filename">
+                    <input type="file" id="myFile6" name="filename" onChange="document.getElementById('myFile6').style.display='block';">
                 </div>
             </div>
             <!-- /.card-body -->

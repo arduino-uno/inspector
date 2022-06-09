@@ -5,7 +5,7 @@ require('../scripts/functions_lib.php');
 
 $connect_db = getConnection();
 
-if ( isset( $_POST ) ) {
+if ( isset( $_POST ) && isset( $_FILES ) ) {
 
      $no_urut = isset( $_POST['no_urut'] ) ? filter_var( $_POST['no_urut'], FILTER_SANITIZE_STRING ) : '';
      $kode_auk = isset( $_POST['kode_auk'] ) ? filter_var( $_POST['kode_auk'], FILTER_SANITIZE_STRING ) : '';
@@ -20,6 +20,23 @@ if ( isset( $_POST ) ) {
      $tgl_lahir = isset( $_POST['tgl_lahir'] ) ? filter_var( $_POST['tgl_lahir'], FILTER_SANITIZE_STRING ) : '';
      $nama_pemeriksa = isset( $_POST['nama_pemeriksa'] ) ? filter_var( $_POST['nama_pemeriksa'], FILTER_SANITIZE_STRING ) : '';
      $tgl_periksa = isset( $_POST['tgl_periksa'] ) ? filter_var( $_POST['tgl_periksa'], FILTER_SANITIZE_STRING ) : '';
+
+     for ( $x = 1; $x <= 5; $x++ ) {
+         $tmp_file = $_FILES["myFile" . $x]['tmp_name']; //temporary file
+         $nama_file = $_FILES["myFile" . $x]['name'];
+         $tipe_file = $_FILES["myFile" . $x]['type'];
+         $uk_file = $_FILES["myFile" . $x]['size']; //ukuran file
+
+         $dir_tujuan = "images/" . $kode_auk; //direktori tujuan
+
+         if ( !is_dir( 'images/' . $kode_auk ) ) {
+            mkdir( 'images/' . $kode_auk, 0755, true );
+         }
+
+         if ( !empty( $tmp_file ) ){
+            $move = move_uploaded_file( $tmp_file, $dir_tujuan . '/' . $nama_file );
+         }
+     }
 
      $sql = "INSERT INTO `anggota_tbl`(`NO`,
                                   `no_urut`,
@@ -59,4 +76,6 @@ if ( isset( $_POST ) ) {
      }
 
      mysqli_close($conn);
+} else {
+  echo "false";
 };
