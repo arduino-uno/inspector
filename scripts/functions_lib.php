@@ -13,7 +13,7 @@ function getConnection() {
 
 function generate_reg_ID() {
 		global $conn;
-		$req = mysqli_query( $conn, "SELECT MAX( NO ) max_val FROM anggota_tbl WHERE 1" );
+		$req = mysqli_query( $conn, "SELECT COUNT( NO ) max_val FROM anggota_tbl" );
 		$rows = mysqli_fetch_array( $req );
 		if ( mysqli_num_rows( $req ) > 0 ) {
 		    $inc_num = (int)$rows[0] + 1;
