@@ -440,9 +440,9 @@ if (!$AVAILABLE_PAGES[$module]) {
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
+<script src="./plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="./plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
@@ -572,7 +572,7 @@ $(function () {
 		};
 
 		// fetch data from MySQL
-		var dataTable = $('#member_data').DataTable({
+		var dataTableMember = $('#member_data').DataTable({
 				"processing":true,
 				"serverSide":true,
 				"order":[],
@@ -629,7 +629,7 @@ $(function () {
 		});
 
 		// fetch data from MySQL
-		var dataTable = $('#disetujui_data').DataTable({
+		var dataTableDisetujui = $('#disetujui_data').DataTable({
 				"processing":true,
 				"serverSide":true,
 				"order":[],
@@ -685,7 +685,7 @@ $(function () {
 		});
 
 		// fetch data from MySQL
-		var dataTable = $('#ditolak_data').DataTable({
+		var dataTableDitolak = $('#ditolak_data').DataTable({
 			"processing":true,
 			"serverSide":true,
 			"order":[],
@@ -741,24 +741,23 @@ $(function () {
 		    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
 		});
 
-		var $msg = email_sender("Agah Nata", "hashcat80@gmail.com", "test PHPMailer", "Test hostinger Email SMTP");
-
-		function email_sender(name, email, title, message) {
-
-				$.ajax({
-						method: 'POST',
-						url: './scripts/email_sender.php',
-						data: { fullname: name, email: email, subject: title, message: message },
-						datatype: 'json',
-						success: function (response) {
-								alert('email response!');
-						}
-
-				});
-				
-		};
 
 });
+
+	function email_confirm(name, email, title, message) {
+
+			$.ajax({
+					method: 'POST',
+					url: './scripts/email_sender.php',
+					data: { fullname: name, email: email, subject: title, message: message },
+					datatype: 'json',
+					success: function (response) {
+							alert(response);
+					}
+
+			});
+
+	};
 
 	function confirm_disetujui(kode) {
 			// Add Member ID to the hidden field for furture usage
@@ -785,12 +784,12 @@ $(function () {
 					datatype: 'json',
 					success: function (response) {
 							if ( response == true ) {
-									alert("Aksi disetujui berhasil!");
+									toastr.success("Aksi disetujui berhasil!");
 							} else {
-									alert("Aksi disetujui gagal!");
+									toastr.error("Aksi disetujui gagal!");
 							}
 							$("#accept_anggota_modal").modal("hide");
-							window.location.href = 'media.php?module=datatables';
+							window.setTimeout(function(){location.reload()},3000)
 					}
 			});
 	};
@@ -807,12 +806,12 @@ $(function () {
 					datatype: 'json',
 					success: function (response) {
 							if ( response == true ) {
-									alert("Aksi penolakan berhasil!");
+									toastr.success("Aksi penolakan berhasil!");
 							} else {
-									alert("Aksi penolakan gagal!");
+									toastr.error("Aksi penolakan gagal!");
 							}
 							$("#reject_anggota_modal").modal("hide");
-							window.location.href = 'media.php?module=datatables';
+							window.setTimeout(function(){location.reload()},3000)
 					}
 			});
 	};
@@ -849,12 +848,12 @@ $(function () {
 					datatype: 'json',
 					success: function (response) {
 							if ( response == true ) {
-									alert("Data telah dihapus!");
+									toastr.success("Data telah dihapus!");
 							} else {
-									alert("Data gagal dihapus!");
+									toastr.error("Data gagal dihapus!");
 							}
 							$("#delete_anggota_modal").modal("hide");
-							window.location.href = 'media.php?module=datatables';
+							window.setTimeout(function(){location.reload()},3000)
 					}
 			});
 	};
@@ -870,12 +869,12 @@ $(function () {
 				datatype: 'json',
 				success: function (response) {
 						if ( response == true ) {
-								alert("Data telah dihapus!");
+								toastr.success("Data telah dihapus!");
 						} else {
-								alert("Data gagal dihapus!");
+								toastr.error("Data gagal dihapus!");
 						}
 						$("#delete_disetujui_modal").modal("hide");
-						window.location.href = 'media.php?module=datatables';
+						window.setTimeout(function(){location.reload()},3000)
 				}
 		});
 	};
@@ -891,12 +890,12 @@ $(function () {
 				datatype: 'json',
 				success: function (response) {
 						if ( response == true ) {
-								alert("Data telah dihapus!");
+								toastr.success("Data telah dihapus!");
 						} else {
-								alert("Data gagal dihapus!");
+								toastr.error("Data gagal dihapus!");
 						}
 						$("#delete_ditolak_modal").modal("hide");
-						window.location.href = 'media.php?module=datatables';
+						window.setTimeout(function(){location.reload()},3000);
 				}
 		});
 	};
@@ -926,12 +925,12 @@ $(function () {
 					dataType: 'JSON',
 			    success: function( response ) {
 
-						if ( response == "true" ) {
-			    		alert('Data Anda berhasil disimpan.');
+						if ( response !== "true" ) {
+			    		toastr.info('Data Anda berhasil disimpan.');
 						} else {
-							alert('Ada kendala pada server kami.');
+							toastr.error('Ada kendala pada server kami.');
 						}
-
+						window.setTimeout(function(){location.reload()},3000);
 			    }
 	    });
 
