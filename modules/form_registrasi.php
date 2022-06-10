@@ -17,7 +17,7 @@
     </div><!-- /.container-fluid -->
   </section>
 
-<form id="form_register" name="form_register" method="POST" action="" enctype="multipart/form-data">
+<form id="form_register" name="form_register" method="POST" action="./scripts/action_page.php" enctype="multipart/form-data">
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -217,7 +217,7 @@
                   <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile1" name="filename">
+                    <input type="file" id="myFile1" name="myFile1">
                 </div>
              </div>
              <div class="row">
@@ -228,7 +228,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile2" name="filename">
+                    <input type="file" id="myFile2" name="myFile2">
                 </div>
             </div>
             <div class="row">
@@ -239,7 +239,7 @@
                   <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile3" name="filename">
+                    <input type="file" id="myFile3" name="myFile3">
                 </div>
             </div>
             <div class="row">
@@ -250,7 +250,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile4" name="filename">
+                    <input type="file" id="myFile4" name="myFile4">
                 </div>
             </div>
             <div class="row">
@@ -265,7 +265,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile5" name="filename">
+                    <input type="file" id="myFile5" name="myFile5">
                 </div>
             </div>
             <div class="row">
@@ -276,7 +276,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile6" name="filename">
+                    <input type="file" id="myFile6" name="myFile6">
                 </div>
             </div>
             <!-- /.card-body -->

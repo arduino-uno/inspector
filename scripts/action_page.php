@@ -1,7 +1,14 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 require('../config/db_config.php');
 require('../scripts/functions_lib.php');
+
+// Increase Maximum Upload File Size
+@ini_set( 'upload_max_filesize' , '128M' ); //set this to a value > than your backup
+@ini_set( 'post_max_size', '128M'); //set this to a value > than your backup
+@ini_set( 'memory_limit', '256M' ); //set this to a value > than your backup
+@ini_set( 'max_execution_time', '300' ); //set this to 0 (infinite)
+@ini_set( 'max_input_time', '300' );
 
 $connect_db = getConnection();
 
@@ -31,10 +38,10 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
          // populate images into array
          $imgArray[] = $nama_file;
 
-         $dir_tujuan = "images/" . $kode_auk; //direktori tujuan
+         $dir_tujuan = "../images/" . $kode_auk; //direktori tujuan
 
-         if ( !is_dir( 'images/' . $kode_auk ) ) {
-            mkdir( 'images/' . $kode_auk, 0755, true );
+         if ( !is_dir( '../images/' . $kode_auk ) ) {
+            mkdir( '../images/' . $kode_auk, 0755, true );
          }
 
          if ( !empty( $tmp_file ) ){
@@ -43,6 +50,7 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
      }
 
      $dokumen_arr = serialize($imgArray);
+     echo $dokumen_arr;
 
      $sql = "INSERT INTO `anggota_tbl`(`NO`,
                                   `no_urut`,
@@ -78,6 +86,7 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
      if ( mysqli_query($conn, $sql) ) {
         echo "true";
      } else {
+        // echo "Error description: " . mysqli_error($conn);
         echo "false";
      }
 

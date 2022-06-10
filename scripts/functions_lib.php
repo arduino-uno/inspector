@@ -1,9 +1,4 @@
 <?php
-error_reporting(0);
-@ini_set( 'upload_max_size' , '256M' );
-@ini_set( 'post_max_size', '256M');
-@ini_set( 'max_execution_time', '300' );
-
 function getConnection() {
 		global $conn;
 		if ( !defined( 'DB_HOST' ) || !defined( 'DB_USERNAME' ) || !defined( 'DB_PASSWORD' ) || !defined( 'DB_DATABASE_NAME' ) )  {
