@@ -899,7 +899,7 @@ $(function () {
 				}
 		});
 	};
-	/*
+	
 	// Bind to the submit event of our form
 	$("#form_register").submit(function(event) {
 			// Prevent default posting of form - put here to work in case of errors
@@ -935,7 +935,7 @@ $(function () {
 	    });
 
 	});
-	*/
+
 	function logoutModal() {
 			$("#logout_modal").modal("show");
 	};

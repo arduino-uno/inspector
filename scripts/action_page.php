@@ -5,6 +5,8 @@ require('../scripts/functions_lib.php');
 
 $connect_db = getConnection();
 
+$imgArray = array();
+
 if ( isset( $_POST ) && isset( $_FILES ) ) {
 
      $no_urut = isset( $_POST['no_urut'] ) ? filter_var( $_POST['no_urut'], FILTER_SANITIZE_STRING ) : '';
@@ -26,6 +28,8 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
          $nama_file = $_FILES["myFile" . $x]['name'];
          $tipe_file = $_FILES["myFile" . $x]['type'];
          $uk_file = $_FILES["myFile" . $x]['size']; //ukuran file
+         // populate images into array
+         $imgArray[] = $nama_file;
 
          $dir_tujuan = "images/" . $kode_auk; //direktori tujuan
 
@@ -37,6 +41,8 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
             $move = move_uploaded_file( $tmp_file, $dir_tujuan . '/' . $nama_file );
          }
      }
+
+     $dokumen_arr = serialize($imgArray);
 
      $sql = "INSERT INTO `anggota_tbl`(`NO`,
                                   `no_urut`,
@@ -67,7 +73,7 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
                                     '$tgl_lahir',
                                     '$nama_pemeriksa',
                                     '$tgl_periksa',
-                                    '')";
+                                    '$dokumen_arr')";
 
      if ( mysqli_query($conn, $sql) ) {
         echo "true";
