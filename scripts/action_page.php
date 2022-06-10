@@ -95,5 +95,5 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
   echo "false";
 };
 
-header("Location: ../media.php?module=form-registrasi");
+header("Location: ../media.php?module=datatables");
 exit();
