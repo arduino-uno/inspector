@@ -292,6 +292,92 @@ if (!$AVAILABLE_PAGES[$module]) {
       require( './modules/form_registrasi.php' );
 	}
   ?>
+	<!-- Personal Profile Info modal -->
+	<div class="modal fade" id="profile_info_modal">
+  	<div class="modal-dialog modal-xl">
+    	<div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Extra Large Modal</h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+      	<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">
+	            <img alt="" style="width:300px;" title="" class="img-circle img-thumbnail isTooltip" src="https://bootdey.com/img/Content/avatar/avatar7.png" data-original-title="Usuario">
+	            <ul title="Ratings" class="list-inline ratings text-center">
+	                <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	                <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	                <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	                <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	                <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+	            </ul>
+	        	</div>
+	        	<div class="col-md-6">
+	            <strong>Information</strong><br>
+	            <div class="table-responsive">
+	            <table class="table table-user-information">
+	                <tbody>
+	                    <tr>
+	                        <td>
+	                            <strong>
+	                                <span class="glyphicon glyphicon-asterisk text-primary"></span>
+	                                Identificacion
+	                            </strong>
+	                        </td>
+	                        <td><span id="kode_auk" class="text-primary">&nbsp;</span></td>
+	                    </tr>
+	                    <tr>
+	                        <td>
+	                            <strong>
+	                                <span class="glyphicon glyphicon-user  text-primary"></span>
+	                                Nama Lengkap
+	                            </strong>
+	                        </td>
+	                        <td><span id="nama_lengkap" class="text-primary">&nbsp;</span></td>
+	                    </tr>
+	                    <tr>
+	                        <td>
+															<strong>
+																	<span class="glyphicon glyphicon-envelope text-primary"></span>
+																	Email
+															</strong>
+	                        </td>
+	                        <td><span id="email" class="text-primary">&nbsp;</span></td>
+	                    </tr>
+
+	                    <tr>
+	                        <td>
+	                            <strong>
+	                                <span class="glyphicon glyphicon-bookmark text-primary"></span>
+	                                No. Telp
+	                            </strong>
+	                        </td>
+	                        <td><span id="no_telp" class="text-primary">&nbsp;</span></td>
+	                    </tr>
+	                    <tr>
+	                        <td>
+	                            <strong>
+	                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+	                                created
+	                            </strong>
+	                        </td>
+	                        <td><span id="tgl_register" class="text-primary">&nbsp;</span></td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	            </div>
+	        	</div>
+	        </div>
+	        <div class="modal-footer justify-content-end">
+	            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        </div>
+				</div>
+      </div>
+			<!-- // Modal Body -->
+    </div>
+  </div>
 	<!-- Accept anggota modal -->
 	<div class="modal fade" id="accept_anggota_modal">
 		<div class="modal-dialog">
@@ -612,7 +698,7 @@ $(function () {
 						targets:-1,
 						render: function(data,type,full,meta) {
 								return '<div class="btn-group" role="group">' +
-												  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
+												  '<button type="button" onclick="member_detail(\'' + data + '\')" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
 												  '<button type="button" onclick="confirm_disetujui(\'' + data + '\')" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
 												  '<button type="button" onclick="confirm_ditolak(\'' + data + '\')" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Ditolak"><i class="fas fa-times-circle"></i></button>' +
 												 	'<button type="button" onclick="confirm_del_anggota(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
@@ -899,30 +985,25 @@ $(function () {
 				}
 		});
 	};
-	/*
+/*
 	// Bind to the submit event of our form
 	$("#form_register").submit(function(event) {
 			// Prevent default posting of form - put here to work in case of errors
 			event.preventDefault();
 			// form initialized
-			var $form = $(this);
-			var serializedData = $form.serialize();
-			// setup some local variables
-	    var $form = $(this);
+			var form = $('#form_register');
 	    // Let's select and cache all the fields
-	    var $inputs = $form.find("input, select, button, textarea");
-	    // Serialize the data in the form
-	    var serializedData = $form.serialize();
+	    var inputs = form.find("input, select, button, textarea");
 	    // Let's disable the inputs for the duration of the Ajax request.
 	    // Note: we disable elements AFTER the form data has been serialized.
 	    // Disabled form elements will not be serialized.
-	    $inputs.prop("disabled", true);
+	    inputs.prop("disabled", true);
 	    // Fire off the request to /form.php
-	    let request = $.ajax({
+	    $.ajax({
 					method: 'POST',
 					enctype: 'multipart/form-data',
-	        url: './scripts/action_page.php',
-	        data: serializedData,
+					url: form.attr("action"),
+        	data: form.serialize(),
 					dataType: 'JSON',
 			    success: function( response ) {
 
@@ -936,7 +1017,28 @@ $(function () {
 	    });
 
 	});
-	*/
+*/
+
+	function member_detail(member_id) {
+			$.ajax({
+		        method: 'POST',
+		        url: './scripts/actions_lib.php',
+		        data: { table:'anggota_tbl', aksi:'tampil', kode:member_id },
+						datatype: 'json',
+						success: function ( myData ) {
+							$.each( JSON.parse( myData ), function( index, value ) {
+									$("#kode_auk").text( value.kode_auk );
+									$("#nama_lengkap").html( "<strong>" + value.nama_lengkap + "</strong>" );
+									$("#email").html( "<a href='mailto:" + value.email + "'>" + value.email + "</a>" );
+									$("#no_telp").text( value.no_telp );
+									$("#tgl_register").text( value.tgl_register );
+				      });
+	    		 }
+			});
+		  // Open modal popup
+		  $("#profile_info_modal").modal("show");
+	};
+
 	function logoutModal() {
 			$("#logout_modal").modal("show");
 	};

@@ -23,7 +23,13 @@ switch ($aksi) {
         $result = delete_table_row($table, $kode);
         echo $result;
         break;
-}
+    case "tampil":
+        $result = tampil_table_row($table, $kode);
+        echo $result;
+        break;
+};
+
+mysqli_close( $conn );
 
 function accept_anggota_row($table_id) {
     global $conn;
@@ -33,7 +39,7 @@ function accept_anggota_row($table_id) {
         return true;
     } else
       return false;
-}
+};
 
 function reject_anggota_row($table_id, $alasan) {
     global $conn;
@@ -48,7 +54,7 @@ function reject_anggota_row($table_id, $alasan) {
         return true;
     } else
       return false;
-}
+};
 
 function delete_table_row($table_name, $table_id) {
 		global $conn;
@@ -57,4 +63,17 @@ function delete_table_row($table_name, $table_id) {
 	     	return true;
 		} else
 		  return false;
-}
+};
+
+function tampil_table_row($table_name, $table_id) {
+    global $conn;
+    // Get User Details
+    $query = "SELECT kode_auk, nama_lengkap, email, no_telp, tgl_register FROM $table_name WHERE kode_auk = '$table_id'";
+    $req = mysqli_query( $conn, $query );
+    if ( mysqli_num_rows( $req ) > 0 ) {
+      $rows = mysqli_fetch_all( $req, MYSQLI_ASSOC );
+      echo json_encode( $rows, JSON_PRETTY_PRINT );
+    } else {
+      echo mysqli_error( $conn );
+    }
+};

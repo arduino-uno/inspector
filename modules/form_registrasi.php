@@ -49,27 +49,27 @@
               </div>
               <div class="form-group">
                 <label>Nama Lengkap <span style="color:red">*</span></label>
-                <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" pattern="^[A-Za-z \s*]+$" placeholder="Nama Lengkap" required>
+                <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" value="Agah Nathan" pattern="^[A-Za-z \s*]+$" placeholder="Nama Lengkap" required>
               </div>
               <div class="form-group">
                 <label>NIP <span style="color:red">*</span></label>
-                <input type="text" class="form-control" name="txt_NIP" id="txt_NIP" placeholder="No. Induk Pegawai" required>
+                <input type="text" class="form-control" name="txt_NIP" id="txt_NIP" value="ID12345678" placeholder="No. Induk Pegawai" required>
               </div>
               <div class="form-group">
                 <label>Email <span style="color:red">*</span></label>
-                <input type="text" class="form-control" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Alamat Email" required>
+                <input type="text" class="form-control" name="email" id="email" value="admin@sintara.co.id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Alamat Email" required>
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Password <span style="color:red">*</span></label>
-                    <input type="password" class="form-control" name="password" id="password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Password" required>
+                    <input type="password" class="form-control" name="password" id="password" value="passwd" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Password" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Retype Password <span style="color:red">*</span></label>
-                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Ulang Password" required>
+                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" value="passwd" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Ulang Password" required>
                   </div>
                 </div>
               </div>
@@ -113,7 +113,7 @@
               <!-- /.form-group -->
               <div class="form-group">
                 <label>Tempat Lahir <span style="color:red">*</span>)</label>
-                <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" placeholder="Tempat Kelahiran" required>
+                <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" value="Bandung" placeholder="Tempat Kelahiran" required>
               </div>
               <!-- /.form-group -->
             </div>
@@ -137,7 +137,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-mobile"></i></span>
                   </div>
-                  <input type="text" name="no_telp" id="no_telp" class="phone_number_3 form-control" placeholder="+62-9999999999" required>
+                  <input type="text" name="no_telp" id="no_telp" class="phone_number_3 form-control" value="+62-9999999" placeholder="+62-9999999999" required>
                 </div>
                 <!-- /.input group -->
               </div>
@@ -203,7 +203,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Diperiksa dan disetujui oleh <span style="color:red">*</span>)</label>
-                <input type="text" class="form-control" name="nama_pemeriksa" id="nama_pemeriksa" placeholder="Diperiksa dan disetujui oleh" required>
+                <input type="text" class="form-control" name="nama_pemeriksa" id="nama_pemeriksa" value="Pak Bambang" placeholder="Diperiksa dan disetujui oleh" required>
               </div>
               <!-- /.form-group -->
             </div>

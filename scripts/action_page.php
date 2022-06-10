@@ -50,7 +50,7 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
      }
 
      $dokumen_arr = serialize($imgArray);
-     echo $dokumen_arr;
+     // echo $dokumen_arr;
 
      $sql = "INSERT INTO `anggota_tbl`(`NO`,
                                   `no_urut`,
@@ -94,3 +94,6 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
 } else {
   echo "false";
 };
+
+header("Location: ../media.php?module=form-registrasi");
+exit();
