@@ -899,7 +899,7 @@ $(function () {
 				}
 		});
 	};
-	
+
 	// Bind to the submit event of our form
 	$("#form_register").submit(function(event) {
 			// Prevent default posting of form - put here to work in case of errors
@@ -920,6 +920,7 @@ $(function () {
 	    // Fire off the request to /form.php
 	    let request = $.ajax({
 					method: 'POST',
+					enctype: 'multipart/form-data',
 	        url: './scripts/action_page.php',
 	        data: serializedData,
 					dataType: 'JSON',

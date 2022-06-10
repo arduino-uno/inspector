@@ -38,7 +38,7 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
          }
 
          if ( !empty( $tmp_file ) ){
-            $move = move_uploaded_file( $tmp_file, $dir_tujuan . '/' . $nama_file );
+            $move = move_uploaded_file( $tmp_file, $dir_tujuan . "/" . $nama_file );
          }
      }
 
