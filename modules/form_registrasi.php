@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Daftar Ahli Ukur Kapal</h1>
+          <h1>Daftar Marine Inspector</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -17,7 +17,7 @@
     </div><!-- /.container-fluid -->
   </section>
 
-<form id="form_register" name="form_register" method="POST" action="./scripts/action_page.php" enctype="multipart/form-data">
+<form id="inspector" name="inspector" action="./scripts/action_page.php" method="POST">
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -53,7 +53,7 @@
               </div>
               <div class="form-group">
                 <label>NIP <span style="color:red">*</span></label>
-                <input type="text" class="form-control" name="txt_NIP" id="txt_NIP" placeholder="No. Induk Pegawai" required>
+                <input type="text" class="form-control" name="NIP" id="NIP" placeholder="No. Induk Pegawai" required>
               </div>
               <div class="form-group">
                 <label>Email <span style="color:red">*</span></label>
@@ -113,7 +113,7 @@
               <!-- /.form-group -->
               <div class="form-group">
                 <label>Tempat Lahir <span style="color:red">*</span>)</label>
-                <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" value="Bandung" placeholder="Tempat Kelahiran" required>
+                <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" placeholder="Tempat Kelahiran" required>
               </div>
               <!-- /.form-group -->
             </div>
@@ -137,7 +137,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-mobile"></i></span>
                   </div>
-                  <input type="text" name="no_telp" id="no_telp" class="form-control phone_number_3" value="" placeholder="+62-9999999999" required>
+                  <input type="text" name="no_telp" id="no_telp" class="phone_number_3 form-control" placeholder="+62-9999999999" required>
                 </div>
                 <!-- /.input group -->
               </div>
@@ -169,11 +169,10 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>METODE PENGUKURAN <span style="color:red">*</span>)</label>
+                <label>Tipe MI <span style="color:red">*</span>)</label>
                 <select class="form-control select2bs4" name="tipe_auk" id="tipe_auk" style="width: 100%;">
-                  <option value="1">Metode Pengukuran Khusus</option>
-                  <option value="2">Metode Pengukuran Dalam Negeri</option>
-                  <option value="3">Metode Pengukuran Luar Negeri</option>
+                  <option value="A">MI Tipe A</option>
+                  <option value="B">MI Tipe B</option>
                 </select>
               </div>
               <!-- /.form-group -->
@@ -203,7 +202,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Diperiksa dan disetujui oleh <span style="color:red">*</span>)</label>
-                <input type="text" class="form-control" name="nama_pemeriksa" id="nama_pemeriksa" value="Pak Bambang" placeholder="Diperiksa dan disetujui oleh" required>
+                <input type="text" class="form-control" name="nama_pemeriksa" id="nama_pemeriksa" placeholder="Diperiksa dan disetujui oleh" required>
               </div>
               <!-- /.form-group -->
             </div>
@@ -217,7 +216,7 @@
                   <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile1" name="myFile1">
+                    <input type="file" id="myFile" name="filename">
                 </div>
              </div>
              <div class="row">
@@ -228,7 +227,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile2" name="myFile2">
+                    <input type="file" id="myFile" name="filename">
                 </div>
             </div>
             <div class="row">
@@ -239,7 +238,7 @@
                   <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile3" name="myFile3">
+                    <input type="file" id="myFile" name="filename">
                 </div>
             </div>
             <div class="row">
@@ -250,7 +249,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile4" name="myFile4">
+                    <input type="file" id="myFile" name="filename">
                 </div>
             </div>
             <div class="row">
@@ -265,7 +264,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile5" name="myFile5">
+                    <input type="file" id="myFile" name="filename">
                 </div>
             </div>
             <div class="row">
@@ -276,7 +275,7 @@
                     <!-- /.form-group -->
                 </div>
                 <div class="col-md-6">
-                    <input type="file" id="myFile6" name="myFile6">
+                    <input type="file" id="myFile" name="filename">
                 </div>
             </div>
             <!-- /.card-body -->
@@ -289,8 +288,8 @@
             <div class="row">
               <div class="col-md-6">&nbsp;</div>
               <div class="col-md-6 text-right">
-                  <input class="btn btn-warning" id="btn_reset" type="reset" value="Reset"/>
-                  <input class="btn btn-primary" id="btn_submit" type="submit" value="Submit"/>
+                  <input class="btn btn-warning" id="reset" type="submit" value="Reset"/>
+                  <input class="btn btn-primary" name="submit" id="submit" type="submit" value="Submit"/>
               </div>
             </div>
             <!-- /.row -->

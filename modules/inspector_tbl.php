@@ -24,11 +24,11 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Konfirmasi Daftar Ahli Ukur Kapal</h3>
+              <h3 class="card-title">Konfirmasi Daftar Marine Inspector</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="member_data" class="table table-active table-bordered table-striped">
+              <table id="member_data" class="table table-bordered table-striped">
                 <thead>
       						<tr>
       							<th width="40" style="text-align: center;">#</th>
@@ -61,57 +61,19 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Daftar DIsetujui Ahli Ukur Kapal</h3>
+              <h3 class="card-title">Daftar Tolakan Marine Inspector</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="disetujui_data" class="table table-primary table-bordered table-striped">
+              <table id="member_data" class="table table-bordered table-striped">
                 <thead>
       						<tr>
       							<th width="40" style="text-align: center;">#</th>
       							<th width="100">Kode AUK</th>
-      							<th width="100">Tgl. Disetujui</th>
+      							<th width="100">Tgl. Register</th>
       							<th>NIP</th>
       							<th width="150">Nama Lengkap</th>
       							<th>Email</th>
-      							<th width="100">Aksi</th>
-      						</tr>
-                </thead>
-              </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-  </section>
-  <!-- /.content -->
-
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Daftar Penolakan Ahli Ukur Kapal</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <table id="ditolak_data" class="table table-warning table-bordered table-striped">
-                <thead>
-      						<tr>
-      							<th width="40" style="text-align: center;">#</th>
-      							<th width="100">Kode AUK</th>
-      							<th width="100">Tgl. Penolakan</th>
-      							<th>NIP</th>
-      							<th width="150">Nama Lengkap</th>
-      							<th>Email</th>
-                    <th>Alasan Penolakan</th>
       							<th width="100">Aksi</th>
       						</tr>
                 </thead>

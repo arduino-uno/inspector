@@ -1,25 +1,13 @@
 <?php
-// error_reporting(0);
-require('../config/db_config.php');
-require('../scripts/functions_lib.php');
+error_reporting(0);
+require('../config/config.inc.php');
 
-// Increase Maximum Upload File Size
-@ini_set( 'upload_max_filesize' , '128M' ); //set this to a value > than your backup
-@ini_set( 'post_max_size', '128M'); //set this to a value > than your backup
-@ini_set( 'memory_limit', '256M' ); //set this to a value > than your backup
-@ini_set( 'max_execution_time', '300' ); //set this to 0 (infinite)
-@ini_set( 'max_input_time', '300' );
-
-$connect_db = getConnection();
-
-$imgArray = array();
-
-if ( isset( $_POST ) && isset( $_FILES ) ) {
-
+if(isset($_POST['submit']))
+{
      $no_urut = isset( $_POST['no_urut'] ) ? filter_var( $_POST['no_urut'], FILTER_SANITIZE_STRING ) : '';
      $kode_auk = isset( $_POST['kode_auk'] ) ? filter_var( $_POST['kode_auk'], FILTER_SANITIZE_STRING ) : '';
      $tipe_auk = isset( $_POST['tipe_auk'] ) ? filter_var( $_POST['tipe_auk'], FILTER_SANITIZE_STRING ) : '';
-     $txt_NIP = isset( $_POST['txt_NIP'] ) ? filter_var( $_POST['txt_NIP'], FILTER_SANITIZE_STRING ) : '';
+     $NIP = isset( $_POST['NIP'] ) ? filter_var( $_POST['NIP'], FILTER_SANITIZE_STRING ) : '';
      $nama_lengkap = isset( $_POST['nama_lengkap'] ) ? filter_var( $_POST['nama_lengkap'], FILTER_SANITIZE_STRING ) : '';
      $email =  isset( $_POST['email'] ) ? filter_var( $_POST['email'], FILTER_SANITIZE_STRING ) : '';
      $no_telp = isset( $_POST['no_telp'] ) ? filter_var( $_POST['no_telp'], FILTER_SANITIZE_STRING ) : '';
@@ -30,52 +18,6 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
      $nama_pemeriksa = isset( $_POST['nama_pemeriksa'] ) ? filter_var( $_POST['nama_pemeriksa'], FILTER_SANITIZE_STRING ) : '';
      $tgl_periksa = isset( $_POST['tgl_periksa'] ) ? filter_var( $_POST['tgl_periksa'], FILTER_SANITIZE_STRING ) : '';
 
-     for ( $x = 0; $x <= 5; $x++ ) {
-         $tmp_file = $_FILES["myFile" . $x]['tmp_name']; //temporary file
-         $nama_file = $_FILES["myFile" . $x]['name'];
-         $extension = pathinfo($nama_file, PATHINFO_EXTENSION);
-         $tipe_file = $_FILES["myFile" . $x]['type'];
-         $uk_file = $_FILES["myFile" . $x]['size']; //ukuran file
-         // populate images into array
-         $imgArray[] = $nama_file;
-         // naming file
-         switch ( $x ) {
-             case 0:
-                 $nama_file = "foto_profile." . $extension;
-                 break;
-             case 1:
-                 $nama_file = "resume." . $extension;
-                 break;
-             case 2:
-                 $nama_file = "surat_tanda_tamat." . $extension;
-                 break;
-             case 3:
-                 $nama_file = "lembar_pengukuhan." . $extension;
-                 break;
-             case 4:
-                 $nama_file = "ijazah_formal." . $extension;
-                 break;
-             case 5:
-                 $nama_file = "ijazah_formal_lain." . $extension;
-                 break;
-         };
-         // create directory
-         $dir_tujuan = "../images/" . $kode_auk; //direktori tujuan
-
-         if ( !is_dir( '../images/' . $kode_auk ) ) {
-            mkdir( '../images/' . $kode_auk, 0755, true );
-         }
-         // saving file
-         if ( !empty( $tmp_file ) ){
-            $extension = pathinfo($nama_file, PATHINFO_EXTENSION);
-            $move = move_uploaded_file( $tmp_file, $dir_tujuan . "/" . $nama_file );
-         }
-
-     };
-
-     $dokumen_arr = serialize($imgArray);
-     // echo $dokumen_arr;
-     $enc_password = MD5($password);  // encrypted
      $sql = "INSERT INTO `anggota_tbl`(`NO`,
                                   `no_urut`,
                                   `kode_auk`,
@@ -95,29 +37,33 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
                                     '$no_urut',
                                     '$kode_auk',
                                     '$tipe_auk',
-                                    '$txt_NIP',
+                                    '$NIP',
                                     '$nama_lengkap',
                                     '$email',
                                     '$no_telp',
-                                    '$enc_password',
+                                    '$password',
                                     '$kelamin',
                                     '$tempat_lahir',
                                     '$tgl_lahir',
                                     '$nama_pemeriksa',
                                     '$tgl_periksa',
-                                    '$dokumen_arr')";
+                                    '')";
 
-     if ( mysqli_query($conn, $sql) ) {
-        echo "true";
+     if (mysqli_query($conn, $sql)) {
+        echo "New record has been added successfully !";
+
+        session_start();
+  			$_SESSION['message'] = "New record has been added successfully !";
+        header('location: ../media.php?module=dashboard');
+
      } else {
-        // echo "Error description: " . mysqli_error($conn);
-        echo "false";
+        echo "Error: " . $sql . ":-" . mysqli_error($conn);
+
+        session_start();
+  			$_SESSION['message'] = "Error: " . $sql . ":-" . mysqli_error($conn);
+        header('location: ../media.php?module=form-registrasi');
+        
      }
-
      mysqli_close($conn);
-} else {
-  echo "false";
-};
 
-header("Location: ../media.php?module=datatables");
-exit();
+}

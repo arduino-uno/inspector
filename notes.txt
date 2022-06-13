@@ -1,11 +1,1 @@
-[+] Naming Uploaded Files
-[+] Member Access
-[+] Email Confirmation & Table Updates
-
-[-] register_tbl
-[-] user_tbl dirubah ke pengguna_tbl
-[-] 'anggota_tbl' bila ada yg disetujui berstatus 1,
-[-] dari Daftar Disetujui Ahli Ukur Kapal, jika disetujui lg
-maka data akan masuk ke 'pengguna_tbl' dan data yg ada di table 'anggota_tbl' akan dihapus.
-
-[-] fetch_disetujui_tbl adalah data dari anggota_tbl dgn status 1
+SELECT MAX( NO ) max_val FROM `anggota_tbl` WHERE 1;
