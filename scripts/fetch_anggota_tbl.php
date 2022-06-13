@@ -13,7 +13,7 @@ $rows = Array();
 $query = 'SELECT kode_auk, tgl_register, NIP, nama_lengkap, email FROM anggota_tbl ';
 
   if ( isset( $_POST["search"]["value"] ) ) {
-    $query .= 'WHERE kode_auk NOT IN (SELECT a.kode_auk FROM disetujui_tbl a) AND kode_auk NOT IN (SELECT b.kode_auk FROM ditolak_tbl b) ';
+    $query .= 'WHERE kode_auk NOT IN (SELECT a.kode_auk FROM pengguna_tbl a) AND kode_auk NOT IN (SELECT b.kode_auk FROM ditolak_tbl b) ';
     $query .= 'AND nama_lengkap LIKE "%'.$_POST["search"]["value"].'%" ';
   	// $query .= 'OR email LIKE "%'.$_POST["search"]["value"].'%" ';
   }

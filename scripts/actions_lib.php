@@ -33,9 +33,13 @@ mysqli_close( $conn );
 
 function accept_anggota_row($table_id) {
     global $conn;
-    $query = "INSERT INTO disetujui_tbl (NO, kode_auk) VALUES ( NULL, '$table_id' )";
+    $query = "INSERT INTO pengguna_tbl (NO, kode_auk, NIP, user_login, user_pass, nama_lengkap, email, no_telp)
+        SELECT NULL, kode_auk, NIP, kode_auk, password, nama_lengkap, email, no_telp
+        FROM anggota_tbl
+        WHERE kode_auk = '$table_id'";
 
     if ( $req = mysqli_query( $conn, $query ) ) {
+        $req = mysqli_query( $conn, "UPDATE anggota_tbl SET status='1' WHERE kode_auk = '$table_id'" );
         return true;
     } else
       return false;
@@ -60,6 +64,7 @@ function delete_table_row($table_name, $table_id) {
 		global $conn;
 		$query = "DELETE FROM $table_name WHERE kode_auk = '$table_id'";
 		if ($req = mysqli_query( $conn, $query ) ) {
+        if ( $table_name == "anggota_tbl" ) rmrf( "../images/" . $table_id );
 	     	return true;
 		} else
 		  return false;
@@ -75,5 +80,20 @@ function tampil_table_row($table_name, $table_id) {
       echo json_encode( $rows, JSON_PRETTY_PRINT );
     } else {
       echo mysqli_error( $conn );
+    }
+};
+
+/*
+ * Remove the directory and its content (all files and subdirectories).
+ * @param string $dir the directory name
+ */
+function rmrf($dir) {
+    foreach (glob($dir) as $file) {
+        if (is_dir($file)) {
+            rmrf("$file/*");
+            rmdir($file);
+        } else {
+            unlink($file);
+        }
     }
 };

@@ -30,28 +30,52 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
      $nama_pemeriksa = isset( $_POST['nama_pemeriksa'] ) ? filter_var( $_POST['nama_pemeriksa'], FILTER_SANITIZE_STRING ) : '';
      $tgl_periksa = isset( $_POST['tgl_periksa'] ) ? filter_var( $_POST['tgl_periksa'], FILTER_SANITIZE_STRING ) : '';
 
-     for ( $x = 1; $x <= 5; $x++ ) {
+     for ( $x = 0; $x <= 5; $x++ ) {
          $tmp_file = $_FILES["myFile" . $x]['tmp_name']; //temporary file
          $nama_file = $_FILES["myFile" . $x]['name'];
+         $extension = pathinfo($nama_file, PATHINFO_EXTENSION);
          $tipe_file = $_FILES["myFile" . $x]['type'];
          $uk_file = $_FILES["myFile" . $x]['size']; //ukuran file
          // populate images into array
          $imgArray[] = $nama_file;
-
+         // naming file
+         switch ( $x ) {
+             case 0:
+                 $nama_file = "foto_profile." . $extension;
+                 break;
+             case 1:
+                 $nama_file = "resume." . $extension;
+                 break;
+             case 2:
+                 $nama_file = "surat_tanda_tamat." . $extension;
+                 break;
+             case 3:
+                 $nama_file = "lembar_pengukuhan." . $extension;
+                 break;
+             case 4:
+                 $nama_file = "ijazah_formal." . $extension;
+                 break;
+             case 5:
+                 $nama_file = "ijazah_formal_lain." . $extension;
+                 break;
+         };
+         // create directory
          $dir_tujuan = "../images/" . $kode_auk; //direktori tujuan
 
          if ( !is_dir( '../images/' . $kode_auk ) ) {
             mkdir( '../images/' . $kode_auk, 0755, true );
          }
-
+         // saving file
          if ( !empty( $tmp_file ) ){
+            $extension = pathinfo($nama_file, PATHINFO_EXTENSION);
             $move = move_uploaded_file( $tmp_file, $dir_tujuan . "/" . $nama_file );
          }
-     }
+
+     };
 
      $dokumen_arr = serialize($imgArray);
      // echo $dokumen_arr;
-
+     $enc_password = MD5($password);  // encrypted
      $sql = "INSERT INTO `anggota_tbl`(`NO`,
                                   `no_urut`,
                                   `kode_auk`,
@@ -75,7 +99,7 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
                                     '$nama_lengkap',
                                     '$email',
                                     '$no_telp',
-                                    '$password',
+                                    '$enc_password',
                                     '$kelamin',
                                     '$tempat_lahir',
                                     '$tgl_lahir',

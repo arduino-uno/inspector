@@ -14,10 +14,10 @@ $query = "SELECT a.kode_auk,
               b.NIP,
               b.nama_lengkap,
               b.email
-        FROM disetujui_tbl a, anggota_tbl b ";
+        FROM pengguna_tbl a, anggota_tbl b ";
 
   if ( isset( $_POST["search"]["value"] ) ) {
-  	$query .= 'WHERE a.kode_auk = b.kode_auk ';
+  	$query .= 'WHERE a.kode_auk = b.kode_auk AND a.role = "member" ';
     $query .= 'AND b.nama_lengkap LIKE "%'.$_POST["search"]["value"].'%" ';
   	// $query .= 'OR b.email LIKE "%'.$_POST["search"]["value"].'%" ';
   }
@@ -51,7 +51,7 @@ $rows = json_decode( $result, true );
 	}
 
   $filtered_rows = count( $rows );
-  $rows_cnt = $conn->get_total_all_records( "disetujui_tbl" );
+  $rows_cnt = $conn->get_total_all_records( "pengguna_tbl" );
 
 	$output = array(
 		"draw"						=>	( isset( $_POST["draw"] ) ? intval( $_POST["draw"] ) : 0 ),

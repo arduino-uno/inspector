@@ -6,10 +6,20 @@ require('./scripts/functions_lib.php');
 $connect_db = getConnection();
 session_start();
 if ( !isset($_SESSION['user_login']) ) header('location: ./login.php');
+$kode_auk = $_SESSION['kode_auk'];
+$user_login = $_SESSION['user_login'];
+$nama_lengkap = $_SESSION['nama_lengkap'];
+$role = $_SESSION['role'];
 // Sanitize $_GET parameters to avoid XSS and other attacks
-$AVAILABLE_PAGES = array('dashboard',
-												'datatables',
-												'form-registrasi');
+if ( $role == "administrator" ){
+		$AVAILABLE_PAGES = array('dashboard',
+														'datatables',
+														'form-registrasi');
+} else {
+		$AVAILABLE_PAGES = array('dashboard',
+													'datatables',
+													'profile');
+};
 
 $AVAILABLE_PAGES = array_fill_keys($AVAILABLE_PAGES, 1);
 $module = isset($_GET['module']) ? filter_var( $_GET['module'], FILTER_SANITIZE_STRING ) : '';
@@ -17,7 +27,7 @@ if (!$AVAILABLE_PAGES[$module]) {
    header("HTTP/1.0 404 Not Found");
    readfile('404.html');
    die();
-}
+};
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -225,7 +235,9 @@ if (!$AVAILABLE_PAGES[$module]) {
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+					<?php
+						echo "<a href='#' class='d-block'>{$nama_lengkap}</a>";
+					?>
         </div>
       </div>
 
@@ -246,29 +258,79 @@ if (!$AVAILABLE_PAGES[$module]) {
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./media.php?module=dashboard" class="nav-link">
-                  <i class="fas fa-tachometer-alt nav-icon"></i>
+				<?php
+				if ( is_admin() ) {
+					echo "<li class='nav-item menu-open'>
+            <ul class='nav nav-treeview'>
+              <li class='nav-item'>
+                <a href='./media.php?module=dashboard' class='nav-link'>
+                  <i class='fas fa-tachometer-alt nav-icon'></i>
                   <p>Dashboard v1</p>
                 </a>
               </li>
-							<li class="nav-header">Form & DataTables</li>
-              <li class="nav-item">
-                <a href="./media.php?module=form-registrasi" class="nav-link">
-                  <i class="fas fa-pencil-alt nav-icon"></i>
+							<li class='nav-header'>Form & DataTables</li>
+              <li class='nav-item'>
+                <a href='./media.php?module=form-registrasi' class='nav-link'>
+                  <i class='fas fa-pencil-alt nav-icon'></i>
                   <p>Form Registrasi</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="./media.php?module=datatables" class="nav-link">
-                  <i class="fa fa-list-alt nav-icon"></i>
+              <li class='nav-item'>
+                <a href='./media.php?module=datatables' class='nav-link'>
+                  <i class='fa fa-list-alt nav-icon'></i>
                   <p>MI DataTables</p>
                 </a>
               </li>
             </ul>
-          </li>
+          </li>";
+				} else {
+					echo "<li class='nav-item menu-open'>
+            <ul class='nav nav-treeview'>
+              <li class='nav-item'>
+                <a href='./media.php?module=dashboard' class='nav-link'>
+                  <i class='fas fa-tachometer-alt nav-icon'></i>
+                  <p>Dashboard v2</p>
+                </a>
+              </li>
+							<li class='nav-header'>Form & DataTables</li>
+              <li class='nav-item'>
+                <a href='./media.php?module=profile' class='nav-link'>
+                  <i class='fas fa-user nav-icon'></i>
+                  <p>Profile</p>
+                </a>
+              </li>
+							<li class='nav-item'>
+		            <a href='#' class='nav-link'>
+		              <i class='nav-icon far fa-envelope'></i>
+		              <p>
+		                Mailbox
+		                <i class='fas fa-angle-left right'></i>
+		              </p>
+		            </a>
+		            <ul class='nav nav-treeview'>
+		              <li class='nav-item'>
+		                <a href='#' class='nav-link'>
+		                  <i class='far fa-circle nav-icon'></i>
+		                  <p>Inbox</p>
+		                </a>
+		              </li>
+		              <li class='nav-item'>
+		                <a href='#' class='nav-link'>
+		                  <i class='far fa-circle nav-icon'></i>
+		                  <p>Compose</p>
+		                </a>
+		              </li>
+		              <li class='nav-item'>
+		                <a href='#' class='nav-link'>
+		                  <i class='far fa-circle nav-icon'></i>
+		                  <p>Read</p>
+		                </a>
+		              </li>
+		            </ul>
+		          </li>
+            </ul>
+          </li>";
+				}; ?>
   				<li class="nav-header">LOGOUT</li>
 					<li class="nav-item">
 							<a href="#" onclick="logoutModal()" class="nav-link">
@@ -290,7 +352,9 @@ if (!$AVAILABLE_PAGES[$module]) {
       require( './modules/inspector_tbl.php' );
   }  elseif ( $module == 'form-registrasi' ){
       require( './modules/form_registrasi.php' );
-	}
+	}  elseif ( $module == 'profile' ){
+      require( './modules/profile.php' );
+	};
   ?>
 	<!-- Personal Profile Info modal -->
 	<div class="modal fade" id="profile_info_modal">
@@ -588,6 +652,29 @@ $(function () {
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+		var QueryString = (new URL(location.href)).searchParams.get('module');
+		if ( QueryString ) {
+				profile_detail("<?php echo $kode_auk; ?>");
+		}
+
+		function profile_detail( member_id ) {
+				$.ajax({
+							method: 'POST',
+							url: './scripts/actions_lib.php',
+							data: { table:'pengguna_tbl', aksi:'tampil', kode:member_id },
+							datatype: 'json',
+							success: function ( myData ) {
+								$.each( JSON.parse( myData ), function( index, value ) {
+										$("#kode_auk").val( value.kode_auk );
+										$("#nama_lengkap").val( value.nama_lengkap );
+										$("#email").val( value.email );
+										$("#no_telp").val( value.no_telp );
+										$("#tgl_register").val( value.tgl_register );
+								});
+						 }
+				})
+		};
+
 		//Datemask dd/mm/yyyy
 		$('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });
 		//Datemask2 mm/dd/yyyy
@@ -755,7 +842,7 @@ $(function () {
 						targets:-1,
 						render: function(data,type,full,meta) {
 								return '<div class="btn-group" role="group">' +
-												  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
+												  '<button type="button" onclick="member_detail(\'' + data + '\')" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
 												  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
 												  '<button type="button" onclick="confirm_del_disetujui(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
 												'</div>';
@@ -812,7 +899,7 @@ $(function () {
 					targets:-1,
 					render: function(data,type,full,meta) {
 							return '<div class="btn-group" role="group">' +
-											  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
+											  '<button type="button" onclick="member_detail(\'' + data + '\')" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-list"></i></button>' +
 											  '<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Disetujui"><i class="fas fa-handshake"></i></button>' +
 											  '<button type="button" onclick="confirm_del_ditolak(\'' + data + '\')" class="btn btn-secondary btn-sm data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>' +
 											'</div>';

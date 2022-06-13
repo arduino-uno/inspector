@@ -137,7 +137,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-mobile"></i></span>
                   </div>
-                  <input type="text" name="no_telp" id="no_telp" class="phone_number_3 form-control" value="+62-9999999" placeholder="+62-9999999999" required>
+                  <input type="text" name="no_telp" id="no_telp" class="form-control phone_number_3" value="" placeholder="+62-9999999999" required>
                 </div>
                 <!-- /.input group -->
               </div>

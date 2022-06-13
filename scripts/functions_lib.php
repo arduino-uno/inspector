@@ -20,3 +20,12 @@ function generate_reg_ID() {
 				return $new_id;
 		}
 };
+
+function is_admin() {
+  session_start();
+  $role = $_SESSION['role'];
+
+  if ( $role != 'administrator' )
+    return FALSE;
+  return TRUE;
+};

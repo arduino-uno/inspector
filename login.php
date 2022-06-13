@@ -13,18 +13,17 @@ $password = mysqli_real_escape_string($conn, $password);
 
 if(!empty($username) && !empty($password)) {
 		$password = md5($password);
-		$login = mysqli_query( $conn, "SELECT * FROM users WHERE user_login = '$username' AND user_pass = '$password' AND user_status = 1" );
+		$login = mysqli_query( $conn, "SELECT * FROM pengguna_tbl WHERE user_login = '$username' AND user_pass = '$password' AND status = 1" );
 		$match = mysqli_num_rows($login);
 		$row   = mysqli_fetch_array($login);
 
 		if ($match > 0) {
 			session_start();
-			$_SESSION['NIK'] = $row[NIK];
+			$_SESSION['kode_auk'] = $row[kode_auk];
+			$_SESSION['NIP'] = $row[NIP];
 			$_SESSION['user_login'] = $row[user_login];
-			$_SESSION['user_fullname'] = $row[user_fullname];
-			$_SESSION['user_email'] = $row[user_email];
-			$_SESSION['user_phone'] = $row[user_phone];
-			$_SESSION['user_address'] = $row[user_address];
+			$_SESSION['nama_lengkap'] = $row[nama_lengkap];
+			$_SESSION['role'] = $row[role];
 			header('location: ./media.php?module=dashboard');
 		} else {
       $message = "Incorrect username/password combination";
@@ -49,6 +48,17 @@ if(!empty($username) && !empty($password)) {
   <link rel="stylesheet" href="./plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+	<style>
+	span.description {
+		font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+		font-size: 1rem;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		color: #000;
+		max-width: 95%;
+		text-align: justify;
+	}
+	</style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -98,14 +108,18 @@ if(!empty($username) && !empty($password)) {
         </div>
       </form>
 
-      <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
+      <div class="social-auth-links text-justify mb-3">
+        <hr>
+				<p><h5>Live Demo Credentials</h5></p>
+				<div class="card" style="border: 1px solid #000;background-color: #d9d9d9;box-shadow: 6px 6px #888;">
+					<div class="card-body">
+						<span class="description">
+							<strong>Role: username | password</strong>:</br>
+							<strong>Admin</strong>: admin | admin </br>
+							<strong>Member</strong>: 120220004 | password </br>
+						</span>
+					</div>
+				</div>
       </div>
       <!-- /.social-auth-links -->
 
