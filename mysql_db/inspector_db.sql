@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 04, 2022 at 09:47 PM
+-- Generation Time: Jun 02, 2022 at 09:54 AM
 -- Server version: 10.4.25-MariaDB-1:10.4.25+maria~bionic
 -- PHP Version: 7.4.29
 
@@ -52,27 +52,7 @@ CREATE TABLE `anggota_tbl` (
 
 INSERT INTO `anggota_tbl` (`NO`, `no_urut`, `kode_auk`, `tipe_auk`, `NIP`, `nama_lengkap`, `email`, `no_telp`, `password`, `kelamin`, `tempat_lahir`, `tgl_lahir`, `nama_pemeriksa`, `tgl_periksa`, `dokumen_arr`, `tgl_register`) VALUES
 (1, '0001', 'A20220001', 'A', 'ID1234567890', 'Agah Nata', 'hashcat80@gmail.com', '+628139999', 'admin', 'Laki-laki', 'Serang', '2022-05-31 20:11:12', 'Ibnu Muakhori', '2022-05-31 20:11:12', '', '2022-04-30 20:10:56'),
-(2, '0002', 'A20220002', 'A', 'ID22221234', 'Ibnu Muakhori', 'muakhori@gmail.com', '+62888888', 'admin', 'Laki-laki', 'Jakarta', '2022-05-31 20:10:07', 'Pak Jokowi', '2022-05-31 20:10:07', '', '2022-05-31 20:09:56'),
-(3, '0003', 'B20220003', 'B', 'ID1234567890', 'Nurdin Saleh', 'nurdin_saleh@gmail.com', '+628139999', 'admin', 'Laki-laki', 'Bandung', '2022-06-14 00:42:46', 'Pak Jokowi', '2022-06-04 00:42:46', '', '2022-06-04 00:42:46');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `disetujui_tbl`
---
-
-CREATE TABLE `disetujui_tbl` (
-  `NO` int(11) NOT NULL,
-  `kode_auk` varchar(20) NOT NULL,
-  `tgl_register` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `disetujui_tbl`
---
-
-INSERT INTO `disetujui_tbl` (`NO`, `kode_auk`, `tgl_register`) VALUES
-(6, 'A20220002', '2022-06-04 14:36:35');
+(2, '0002', 'A20220002', 'A', 'ID22221234', 'Ibnu Muakhori', 'muakhori@gmail.com', '+62888888', 'admin', 'Laki-laki', 'Jakarta', '2022-05-31 20:10:07', 'Pak Jokowi', '2022-05-31 20:10:07', '', '2022-05-31 20:09:56');
 
 -- --------------------------------------------------------
 
@@ -83,6 +63,7 @@ INSERT INTO `disetujui_tbl` (`NO`, `kode_auk`, `tgl_register`) VALUES
 CREATE TABLE `ditolak_tbl` (
   `NO` int(11) NOT NULL,
   `kode_auk` varchar(20) NOT NULL,
+  `tgl_register` timestamp NULL DEFAULT NULL,
   `alasan` text NOT NULL,
   `tgl_penolakan` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -91,8 +72,9 @@ CREATE TABLE `ditolak_tbl` (
 -- Dumping data for table `ditolak_tbl`
 --
 
-INSERT INTO `ditolak_tbl` (`NO`, `kode_auk`, `alasan`, `tgl_penolakan`) VALUES
-(15, 'B20220003', 'Alasan ditolak!', '2022-06-04 14:29:35');
+INSERT INTO `ditolak_tbl` (`NO`, `kode_auk`, `tgl_register`, `alasan`, `tgl_penolakan`) VALUES
+(1, 'A20221234', '2022-06-02 02:51:50', 'Test', '2022-06-02 02:52:59'),
+(2, 'A20221234', '2022-06-02 02:52:00', 'Test', '2022-06-02 02:52:59');
 
 -- --------------------------------------------------------
 
@@ -138,12 +120,6 @@ ALTER TABLE `anggota_tbl`
   ADD PRIMARY KEY (`NO`);
 
 --
--- Indexes for table `disetujui_tbl`
---
-ALTER TABLE `disetujui_tbl`
-  ADD PRIMARY KEY (`NO`);
-
---
 -- Indexes for table `ditolak_tbl`
 --
 ALTER TABLE `ditolak_tbl`
@@ -163,19 +139,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `anggota_tbl`
 --
 ALTER TABLE `anggota_tbl`
-  MODIFY `NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `disetujui_tbl`
---
-ALTER TABLE `disetujui_tbl`
-  MODIFY `NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `ditolak_tbl`
 --
 ALTER TABLE `ditolak_tbl`
-  MODIFY `NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
