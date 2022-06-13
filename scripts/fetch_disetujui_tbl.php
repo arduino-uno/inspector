@@ -11,6 +11,7 @@ $output = array();
 $rows = Array();
 $query = "SELECT a.kode_auk,
               a.tgl_disetujui,
+              a.role,
               b.NIP,
               b.nama_lengkap,
               b.email

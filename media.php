@@ -1038,7 +1038,7 @@ $(function () {
 		$.ajax({
         method: 'POST',
         url: './scripts/actions_lib.php',
-        data: { table:'disetujui_tbl', aksi:'hapus', kode:no_id },
+        data: { table:'pengguna_tbl', aksi:'hapus', kode:no_id },
 				datatype: 'json',
 				success: function (response) {
 						if ( response == true ) {
