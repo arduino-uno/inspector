@@ -64,14 +64,14 @@ INSERT INTO `anggota_tbl` (`NO`, `no_urut`, `kode_auk`, `tipe_auk`, `NIP`, `nama
 CREATE TABLE `disetujui_tbl` (
   `NO` int(11) NOT NULL,
   `kode_auk` varchar(20) NOT NULL,
-  `tgl_disetujui` timestamp NOT NULL DEFAULT current_timestamp()
+  `tgl_register` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `disetujui_tbl`
 --
 
-INSERT INTO `disetujui_tbl` (`NO`, `kode_auk`, `tgl_disetujui`) VALUES
+INSERT INTO `disetujui_tbl` (`NO`, `kode_auk`, `tgl_register`) VALUES
 (6, 'A20220002', '2022-06-04 14:36:35');
 
 -- --------------------------------------------------------

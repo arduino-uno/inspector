@@ -10,7 +10,7 @@ $conn->getConnection();
 $output = array();
 $rows = Array();
 $query = "SELECT a.kode_auk,
-              a.tgl_disetujui,
+              a.tgl_register,
               a.role,
               b.NIP,
               b.nama_lengkap,
@@ -42,7 +42,7 @@ $rows = json_decode( $result, true );
 		$sub_array = array();
     $sub_array[] = $i;
     $sub_array[] = $row["kode_auk"];
-    $sub_array[] = $row["tgl_disetujui"];
+    $sub_array[] = $row["tgl_register"];
 		$sub_array[] = $row["NIP"];
 		$sub_array[] = $row["nama_lengkap"];
 		$sub_array[] = $row["email"];
