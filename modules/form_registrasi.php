@@ -290,7 +290,7 @@
               <div class="col-md-6">&nbsp;</div>
               <div class="col-md-6 text-right">
                   <input class="btn btn-warning" id="btn_reset" type="reset" value="Reset"/>
-                  <input class="btn btn-primary" id="btn_submit" type="submit" value="Submit"/>
+                  <input class="btn btn-primary" name="submit" id="btn_submit" type="submit" value="Submit"/>
               </div>
             </div>
             <!-- /.row -->

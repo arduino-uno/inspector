@@ -12,6 +12,9 @@ require_once "../phpmailer/SMTP.php";
 // Mail SMTP Configuration
 require_once "../config/mail_config.php";
 
+var_dump($_POST);
+
+/*
 if ( isset( $_POST ) ) {
     $fullname = isset( $_POST['nama_lengkap'] ) ? filter_var( $_POST['nama_lengkap'], FILTER_SANITIZE_STRING ) : '';
     $email =  isset( $_POST['email'] ) ? filter_var( $_POST['email'], FILTER_SANITIZE_STRING ) : '';
@@ -56,3 +59,4 @@ function email_confimation( $fullname, $email, $subject, $message ) {
 		    return "Message has been sent successfully";
 		}
 };
+*/

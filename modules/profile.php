@@ -37,7 +37,7 @@
         <div class="card-body">
           <div class="row">
               <!-- left column -->
-              <div class="col-md-4">
+              <div class="col-md-5">
                 <div class="text-center">
                   <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="avatar img-circle img-thumbnail" alt="avatar">
                   <h6>Upload a different photo...</h6>
@@ -51,35 +51,49 @@
                 </div>
               </div>
               <!-- edit form column -->
-              <div class="col-md-8 personal-info">
+              <div class="col-md-7 personal-info">
                 <form class="form-horizontal" role="form">
                   <div class="form-group">
                     <label class="col-lg-3 control-label">Kode AUK:</label>
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                       <input class="form-control" name="kode_auk" id="kode_auk" type="text" disabled value="Table ID">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-3 control-label">Nama Lengkap:</label>
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                       <input class="form-control" name="nama_lengkap" id="nama_lengkap" type="text" value="bootdey">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-3 control-label">Email:</label>
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                       <input class="form-control" name="email" id="email" type="email" value="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Alamat Email" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-3 control-label">No. Telp:</label>
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                       <input class="form-control phone_number_3" name="no_telp" id="no_telp" type="text" value="" placeholder="+62-9999999999" required>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label>New Password <span style="color:red">*</span></label>
+                        <input type="password" class="form-control" name="password" id="password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Password" required>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label>Retype New Password <span style="color:red">*</span></label>
+                        <input type="password" class="form-control" name="confirm_password" id="confirm_password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Ulang Password" required>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-3 control-label">Time Zone:</label>
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                       <div class="ui-select">
                         <select id="user_time_zone" class="form-control">
                           <option value="Hawaii">(GMT-10:00) Hawaii</option>
@@ -98,9 +112,6 @@
               </div>
             </div>
             <!-- // row profile -->
-            <div class="row">
-
-            </div>
           </div>
         </div>
       </div>

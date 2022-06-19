@@ -1,5 +1,5 @@
 <?php
-// error_reporting(0);
+error_reporting(0);
 require('../config/db_config.php');
 require('../scripts/functions_lib.php');
 
@@ -14,7 +14,7 @@ $connect_db = getConnection();
 
 $imgArray = array();
 
-if ( isset( $_POST ) && isset( $_FILES ) ) {
+if ( isset( $_POST ) ) {
 
      $no_urut = isset( $_POST['no_urut'] ) ? filter_var( $_POST['no_urut'], FILTER_SANITIZE_STRING ) : '';
      $kode_auk = isset( $_POST['kode_auk'] ) ? filter_var( $_POST['kode_auk'], FILTER_SANITIZE_STRING ) : '';
@@ -97,6 +97,4 @@ if ( isset( $_POST ) && isset( $_FILES ) ) {
 } else {
   echo "false";
 };
-
-header("Location: ../media.php?module=datatables");
 exit();
