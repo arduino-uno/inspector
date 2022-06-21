@@ -1185,12 +1185,12 @@ $(function () {
 
 									$("#img_list").empty(); // Clear everything before append new elements
 
-									if ( value.profile_img.length != 0 ) insert_image( profile_img );
-									if ( value.resume_img.length != 0 ) insert_image( resume_img );
-									if ( value.doc1_img.length != 0 ) insert_image( doc1_img );
-									if ( value.doc2_img.length != 0 ) insert_image( doc2_img );
-									if ( value.doc3_img.length != 0 ) insert_image( doc3_img );
-									if ( value.doc4_img.length != 0 ) insert_image( doc4_img );
+									if ( value.profile_img.length != 0 ) insert_image(  value.profile_img, profile_img );
+									if ( value.resume_img.length != 0 ) insert_image( value.resume_img, resume_img );
+									if ( value.doc1_img.length != 0 ) insert_image( value.doc1_img, doc1_img );
+									if ( value.doc2_img.length != 0 ) insert_image( value.doc2_img, doc2_img );
+									if ( value.doc3_img.length != 0 ) insert_image( value.doc3_img, doc3_img );
+									if ( value.doc4_img.length != 0 ) insert_image( value.doc4_img, doc4_img );
 
 				      });
 
@@ -1200,9 +1200,9 @@ $(function () {
 		  $("#profile_info_modal").modal("show");
 	};
 
-	function insert_image( image_src ) {
+	function insert_image( file_nm, image_src ) {
 			$("#img_list").append("<div class='col-sm-2'>" +
-				"<a href='" + image_src + "' data-toggle='lightbox' data-title='sample 1 - white' data-gallery='gallery'>" +
+				"<a href='" + image_src + "' data-toggle='lightbox' data-title='" + file_nm + "' data-gallery='gallery'>" +
 				"<img src='" + image_src + "' class='img-fluid mb-2' alt='white sample'/>" +
 				"</a></div>");
 
