@@ -52,17 +52,24 @@
               </div>
               <!-- edit form column -->
               <div class="col-md-7 personal-info">
-                <form class="form-horizontal" role="form">
+                <form class="form-horizontal" id="form_profile" name="form_profile" method="POST" action="./scripts/profile_page.php"/>
                   <div class="form-group">
                     <label class="col-lg-3 control-label">Kode AUK:</label>
                     <div class="col-lg-12">
-                      <input class="form-control" name="kode_auk" id="kode_auk" type="text" disabled value="Table ID">
+                      <input class="form-control" name="dis_kode_auk" id="dis_kode_auk" type="text" disabled value="Table ID">
+                      <input name="kode_auk" id="kode_auk" type="text" value="" hidden>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-lg-3 control-label">Nama Login:</label>
+                    <div class="col-lg-12">
+                      <input class="form-control" name="nama_login" id="nama_login" pattern="[A-Za-z0-9]+" type="text" value="" required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-lg-3 control-label">Nama Lengkap:</label>
                     <div class="col-lg-12">
-                      <input class="form-control" name="nama_lengkap" id="nama_lengkap" type="text" value="bootdey">
+                      <input class="form-control" name="nama_lengkap" id="nama_lengkap" pattern="^[A-Za-z \s*]+$" type="text" value="" required>
                     </div>
                   </div>
                   <div class="form-group">
@@ -81,14 +88,20 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label>New Password <span style="color:red">*</span></label>
-                        <input type="password" class="form-control" name="password" id="password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Password" required>
+                        <input type="password" class="form-control" name="password" id="password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Password">
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label>Retype New Password <span style="color:red">*</span></label>
-                        <input type="password" class="form-control" name="confirm_password" id="confirm_password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Ulang Password" required>
+                        <input type="password" class="form-control" name="confirm_password" id="confirm_password" pattern=".{4,}" title="Four or more characters" placeholder="Ketikan Ulang Password">
                       </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-lg-3 control-label">Alamat Lengkap:</label>
+                    <div class="col-lg-12">
+                      <textarea class="form-control" name="alamat" id="alamat" rows="8" placeholder="Alamat Anda">&nbsp;</textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -107,6 +120,10 @@
                         </select>
                       </div>
                     </div>
+                  </div>
+                  <div class="col-md-6 justify-content-end">
+                      <input class="btn btn-warning" id="btn_reset" type="reset" value="Reset"/>
+                      <input class="btn btn-primary" name="submit" id="btn_submit" type="submit" value="Submit"/>
                   </div>
                 </form>
               </div>

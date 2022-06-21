@@ -51,6 +51,8 @@ if (!$AVAILABLE_PAGES[$module]) {
   <link rel="stylesheet" href="./plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 	<!-- Toastr -->
   <link rel="stylesheet" href="./plugins/toastr/toastr.min.css">
+	<!-- Ekko Lightbox -->
+  <link rel="stylesheet" href="./plugins/ekko-lightbox/ekko-lightbox.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="./dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
@@ -432,28 +434,17 @@ if (!$AVAILABLE_PAGES[$module]) {
 	                </tbody>
 	            </table>
 	            </div>
-							<div class="form-group border border-secondary p-3">
-								<label class="col-lg-3 control-label">Files:</label>
-								<div class="row">
-									<div class="col-lg">
-										<i class="fas fa-file-image fa-5x"></i>
-									</div>
-									<div class="col-lg">
-										<i class="fas fa-file-image fa-5x"></i>
-									</div>
-									<div class="col-lg">
-										<i class="fas fa-file-image fa-5x"></i>
-									</div>
-									<div class="col-lg">
-										<i class="fas fa-file-image fa-5x"></i>
-									</div>
-									<div class="col-lg">
-										<i class="fas fa-file-image fa-5x"></i>
-									</div>
-									<div class="col-lg">
-										<i class="fas fa-file-image fa-5x"></i>
-									</div>
-								</div>
+							<div class="form-group">
+								<div class="col-12">
+			            <div class="card card-primary">
+			              <div class="card-header">
+			                <h4 class="card-title">Foto & Dokumen</h4>
+			              </div>
+			              <div class="card-body">
+			                <div class="row" id="img_list">&nbsp;</div>
+			              </div>
+			            </div>
+			          </div>
 							</div>
 	        	</div>
 	        </div>
@@ -644,6 +635,8 @@ if (!$AVAILABLE_PAGES[$module]) {
 <script src="./plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="./plugins/toastr/toastr.min.js"></script>
+<!-- Ekko Lightbox -->
+<script src="./plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
 <!-- AdminLTE App -->
 <script src="./dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -675,28 +668,65 @@ $(function () {
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+		$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox({
+        alwaysShowClose: true
+      });
+    });
+
 		var QueryString = (new URL(location.href)).searchParams.get('module');
-		if ( QueryString ) {
+
+		if ( QueryString == "profile" ) {
 				profile_detail("<?php echo $kode_auk; ?>");
-		}
+		};
 
 		function profile_detail( member_id ) {
-				$.ajax({
-							method: 'POST',
-							url: './scripts/actions_lib.php',
-							data: { table:'pengguna_tbl', aksi:'tampil', kode:member_id },
-							datatype: 'json',
-							success: function ( myData ) {
-								$.each( JSON.parse( myData ), function( index, value ) {
+			 $.ajax({
+						method: 'POST',
+						url: './scripts/actions_lib.php',
+						data: { table:'anggota_tbl', aksi:'tampil', kode:member_id },
+						datatype: 'JSON',
+						success: function ( myData ) {
+							  $.each( JSON.parse( myData ), function( index, value ) {
+										console.log(value.nama_login);
+										$("img.avatar").attr( "src", "./images/" + value.kode_auk + "/" + value.profile_img );
+										$("#dis_kode_auk").val( value.kode_auk );
 										$("#kode_auk").val( value.kode_auk );
+										$("#nama_login").val( value.nama_login );
 										$("#nama_lengkap").val( value.nama_lengkap );
 										$("#email").val( value.email );
 										$("#no_telp").val( value.no_telp );
-										$("#tgl_register").val( value.tgl_register );
+										$("textarea#alamat").val( value.alamat );
 								});
-						 }
+						}
 				})
 		};
+
+		$("#form_profile").submit( function(e) {
+				var form = $("#form_profile");
+	      e.preventDefault();
+
+	      $.ajax({
+	          type: form.attr('method'),
+	          url: form.attr('action'),
+	          data: new FormData( this ),
+	          processData: false,  // Important!
+	          contentType: false,
+	          cache: false,
+	          timeout: 600000,
+	          success: function ( response ) {
+								if ( response == "true" ) {
+					    		toastr.info('Data Anda berhasil disimpan.');
+									// email_confirm(name, email, title, message);
+								} else {
+									toastr.error('Ada kendala pada server kami.');
+								}
+	          }
+	      });
+
+				window.setTimeout(function(){location.reload()},20000);
+	  });
 
 		//Datemask dd/mm/yyyy
 		$('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });
@@ -1136,19 +1166,47 @@ $(function () {
 		        method: 'POST',
 		        url: './scripts/actions_lib.php',
 		        data: { table:'anggota_tbl', aksi:'tampil', kode:member_id },
-						datatype: 'json',
+						datatype: 'JSON',
 						success: function ( myData ) {
+
 							$.each( JSON.parse( myData ), function( index, value ) {
 									$("#kode_auk").text( value.kode_auk );
 									$("#nama_lengkap").html( "<strong>" + value.nama_lengkap + "</strong>" );
 									$("#email").html( "<a href='mailto:" + value.email + "'>" + value.email + "</a>" );
 									$("#no_telp").text( value.no_telp );
 									$("#tgl_register").text( value.tgl_register );
+
+									var profile_img = "./images/" + value.kode_auk + "/" + value.profile_img;
+									var resume_img = "./images/" + value.kode_auk + "/" + value.resume_img;
+									var doc1_img = "./images/" + value.kode_auk + "/" + value.doc1_img;
+									var doc2_img = "./images/" + value.kode_auk + "/" + value.doc2_img;
+									var doc3_img = "./images/" + value.kode_auk + "/" + value.doc3_img;
+									var doc4_img = "./images/" + value.kode_auk + "/" + value.doc4_img;
+
+									$("#img_list").empty(); // Clear everything before append new elements
+
+									if ( value.profile_img.length != 0 ) insert_image( profile_img );
+									if ( value.resume_img.length != 0 ) insert_image( resume_img );
+									if ( value.doc1_img.length != 0 ) insert_image( doc1_img );
+									if ( value.doc2_img.length != 0 ) insert_image( doc2_img );
+									if ( value.doc3_img.length != 0 ) insert_image( doc3_img );
+									if ( value.doc4_img.length != 0 ) insert_image( doc4_img );
+
 				      });
+
 	    		 }
 			});
 		  // Open modal popup
 		  $("#profile_info_modal").modal("show");
+	};
+
+	function insert_image( image_src ) {
+			$("#img_list").append("<div class='col-sm-2'>" +
+				"<a href='" + image_src + "' data-toggle='lightbox' data-title='sample 1 - white' data-gallery='gallery'>" +
+				"<img src='" + image_src + "' class='img-fluid mb-2' alt='white sample'/>" +
+				"</a></div>");
+
+			return true;
 	};
 
 	function logoutModal() {
