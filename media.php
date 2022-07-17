@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+<<<<<<< HEAD
 // Set Database Config
 require("./config/db_config.php");
 // CRUD Methods: "GET", "PUT", "POST" & "DELETE"
@@ -15,6 +16,20 @@ if ( !isset($_SESSION['user_login']) ) header("location: ./login.php");
 $module = isset( $_GET['module'] ) ? filter_var( $_GET['module'], FILTER_SANITIZE_STRING ) : '';
 
 if ( is_admin() ) {
+=======
+require('./config/db_config.php');
+require('./scripts/functions_lib.php');
+
+$connect_db = getConnection();
+session_start();
+if ( !isset($_SESSION['user_login']) ) header('location: ./login.php');
+$kode_auk = $_SESSION['kode_auk'];
+$user_login = $_SESSION['user_login'];
+$nama_lengkap = $_SESSION['nama_lengkap'];
+$role = $_SESSION['role'];
+// Sanitize $_GET parameters to avoid XSS and other attacks
+if ( $role == "administrator" ){
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
 		$AVAILABLE_PAGES = array('dashboard',
 														'datatables',
 														'form-registrasi');
@@ -25,7 +40,11 @@ if ( is_admin() ) {
 };
 
 $AVAILABLE_PAGES = array_fill_keys($AVAILABLE_PAGES, 1);
+<<<<<<< HEAD
 
+=======
+$module = isset($_GET['module']) ? filter_var( $_GET['module'], FILTER_SANITIZE_STRING ) : '';
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
 if (!$AVAILABLE_PAGES[$module]) {
    header("HTTP/1.0 404 Not Found");
    readfile('404.html');
@@ -241,7 +260,11 @@ if (!$AVAILABLE_PAGES[$module]) {
         </div>
         <div class="info">
 					<?php
+<<<<<<< HEAD
 						echo "<a href='#' class='d-block'>{$_SESSION['user_fullname']}</a>";
+=======
+						echo "<a href='#' class='d-block'>{$nama_lengkap}</a>";
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
 					?>
         </div>
       </div>
@@ -678,6 +701,7 @@ $(function () {
       });
     });
 
+<<<<<<< HEAD
 		var queryString = (new URL(location.href)).searchParams.get('module');
 
 		function checkforText(requiredText) {
@@ -699,6 +723,11 @@ $(function () {
 		var found = checkforText(queryString);
 
 		if ( queryString == "profile" ) {
+=======
+		var QueryString = (new URL(location.href)).searchParams.get('module');
+
+		if ( QueryString == "profile" ) {
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
 				profile_detail("<?php echo $kode_auk; ?>");
 		};
 
@@ -738,11 +767,17 @@ $(function () {
 	          timeout: 600000,
 	          success: function ( response ) {
 								if ( response == "true" ) {
+<<<<<<< HEAD
 									$('#success').trigger("play");
 					    		toastr.info('Data Anda berhasil disimpan.');
 									// email_confirm(name, email, title, message);
 								} else {
 									$('#error').trigger("play");
+=======
+					    		toastr.info('Data Anda berhasil disimpan.');
+									// email_confirm(name, email, title, message);
+								} else {
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
 									toastr.error('Ada kendala pada server kami.');
 								}
 	          }

@@ -1,3 +1,42 @@
+<<<<<<< HEAD
+=======
+<?php
+error_reporting(0);
+require('./config/db_config.php');
+require('./scripts/functions_lib.php');
+
+$connect_db = getConnection();
+
+$username = isset($_POST['username']) ? filter_var( $_POST['username'], FILTER_SANITIZE_STRING ) : '';
+$password = isset($_POST['password']) ? filter_var( $_POST['password'], FILTER_SANITIZE_STRING ) : '';
+
+$username = mysqli_real_escape_string($conn, $username);
+$password = mysqli_real_escape_string($conn, $password);
+
+if(!empty($username) && !empty($password)) {
+		$password = md5($password);
+		$login = mysqli_query( $conn, "SELECT * FROM pengguna_tbl WHERE user_login = '$username' AND user_pass = '$password' AND status = 1" );
+		$match = mysqli_num_rows($login);
+		$row   = mysqli_fetch_array($login);
+
+		if ($match > 0) {
+			session_start();
+			$_SESSION['kode_auk'] = $row[kode_auk];
+			$_SESSION['NIP'] = $row[NIP];
+			$_SESSION['user_login'] = $row[user_login];
+			$_SESSION['nama_lengkap'] = $row[nama_lengkap];
+			$_SESSION['role'] = $row[role];
+			header('location: ./media.php?module=dashboard');
+		} else {
+      $message = "Incorrect username/password combination";
+    }
+
+    mysqli_close($conn);
+} else {
+  $message = "Username or Password is empty!";
+}
+?>
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +73,17 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
+<<<<<<< HEAD
       <form id="login_form" name="login_form" method="POST" action="./scripts/user_auth.php">
+=======
+      <p class="login-box-msg" style="color:red;">
+        <?php
+          if ($message == '') $message = 'Sign in to start your session';
+          echo $message;
+        ?>
+      </p>
+      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
         <div class="input-group mb-3">
           <input type="text" name="username" class="form-control" value="admin" placeholder="Username">
           <div class="input-group-append">
@@ -94,8 +143,11 @@
   </div>
 </div>
 <!-- /.login-box -->
+<<<<<<< HEAD
 <audio id="error" src="./sounds/KDE_Error_2.ogg"></audio>
 <audio id="success" src="./sounds/KDE_Chimes_2.ogg"></audio>
+=======
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
 <!-- jQuery -->
 <script src="./plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

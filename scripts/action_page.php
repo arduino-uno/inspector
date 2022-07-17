@@ -92,8 +92,15 @@ if ( isset( $_POST ) ) {
         // echo "Error description: " . mysqli_error($conn);
         echo "false";
      }
+<<<<<<< HEAD
 
      mysqli_close($conn);
 
+=======
+
+     mysqli_close($conn);
+} else {
+  echo "false";
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
 };
 exit();

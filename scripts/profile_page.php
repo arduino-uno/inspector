@@ -16,8 +16,14 @@ if ( isset( $_POST ) ) {
       $alamat = isset( $_POST['alamat'] ) ? filter_var( $_POST['alamat'], FILTER_SANITIZE_STRING ) : '';
 
       if ( !empty( $user_pass ) ) {
+<<<<<<< HEAD
           $query = "UPDATE pengguna_tbl SET user_login = '$user_login',
                                      user_pass = MD5($user_pass),
+=======
+          $enc_password = MD5($user_pass);  // encrypted
+          $query = "UPDATE pengguna_tbl SET user_login = '$user_login',
+                                     user_pass = $enc_password,
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
                                      nama_lengkap = '$nama_lengkap',
                                      email = '$email',
                                      no_telp = '$no_telp',

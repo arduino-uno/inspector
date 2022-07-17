@@ -156,7 +156,11 @@ class Class_DataTables_CRUD {
 
 	}
 
+<<<<<<< HEAD
 	public function get_newid() {
+=======
+	public function get_newid( $table="items", $id_key="", $prefix="FD" ) {
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
 
 		try {
 			$req = mysqli_query( $this->conn, "SELECT MAX( NO ) max_val FROM anggota_tbl WHERE 1" );

@@ -39,7 +39,11 @@
               <!-- left column -->
               <div class="col-md-5">
                 <div class="text-center">
+<<<<<<< HEAD
                   <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="avatar img-thumbnail" alt="avatar">
+=======
+                  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="avatar img-circle img-thumbnail" alt="avatar">
+>>>>>>> 6a9184ed2d09ef4b1e22deef2b21004a7c31cbff
                   <h6>Upload a different photo...</h6>
 
                   <input type="file" class="form-control">
