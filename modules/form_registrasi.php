@@ -305,5 +305,3 @@
   </form>
 </div>
 <!-- /.content-wrapper -->
-<audio id="error" src="./sounds/KDE_Error_2.ogg"></audio>
-<audio id="success" src="./sounds/KDE_Chimes_2.ogg"></audio>

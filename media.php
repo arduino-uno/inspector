@@ -361,6 +361,8 @@ if (!$AVAILABLE_PAGES[$module]) {
       require( './modules/profile.php' );
 	};
   ?>
+	<audio id="error" src="./sounds/KDE_Error_2.ogg"></audio>
+	<audio id="success" src="./sounds/KDE_Chimes_2.ogg"></audio>
 	<!-- Personal Profile Info modal -->
 	<div class="modal fade" id="profile_info_modal">
   	<div class="modal-dialog modal-xl">
@@ -748,7 +750,7 @@ $(function () {
 	          }
 	      });
 
-				window.setTimeout(function(){location.reload()},20000);
+				window.setTimeout(function(){location.reload()}, 3000);
 	  });
 
 		//Datemask dd/mm/yyyy
