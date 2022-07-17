@@ -23,7 +23,7 @@ class Class_DataTables_CRUD {
 
 	}
 
-	public function get_sql_exec( $query="select * from users" ) {
+	public function get_sql_exec( $query="select * from items" ) {
 
 		try {
 
@@ -43,7 +43,7 @@ class Class_DataTables_CRUD {
 
 	}
 
-	public function get_method( $table="users", $id_key="", $id_val="" ) {
+	public function get_method( $table="items", $id_key="", $id_val="" ) {
 
 		try {
 			$query = "SELECT * FROM $table" . ( $id_key ? " WHERE $id_key='$id_val'" : "" );
@@ -63,7 +63,7 @@ class Class_DataTables_CRUD {
 
 	}
 
-	public function post_method( $table="users", $sets=Array() ) {
+	public function post_method( $table="items", $sets=Array() ) {
 
 		$arr_string = $this->arr2string( $sets );
 
@@ -84,7 +84,7 @@ class Class_DataTables_CRUD {
 
 	}
 
-	public function put_method( $table="users", $sets=Array(), $id_key="", $id_val="" ) {
+	public function put_method( $table="items", $sets=Array(), $id_key="", $id_val="" ) {
 
 		$arr_string = $this->arr2string( $sets );
 
@@ -105,7 +105,7 @@ class Class_DataTables_CRUD {
 
 	}
 
-	public function delete_method( $table="users", $id_key="", $id_val="" ) {
+	public function delete_method( $table="items", $id_key="", $id_val="" ) {
 
 		try {
 			$sql = "DELETE FROM $table WHERE $id_key='$id_val'";
@@ -124,7 +124,7 @@ class Class_DataTables_CRUD {
 
 	}
 
-	public function get_total_all_records( $table="users" ) {
+	public function get_total_all_records( $table="items" ) {
 
 		try {
 			$req = mysqli_query( $this->conn, "SELECT * FROM $table" );
@@ -156,14 +156,14 @@ class Class_DataTables_CRUD {
 
 	}
 
-	public function get_newid( $table="users", $id_key="", $prefix="FD" ) {
+	public function get_newid() {
 
 		try {
-			$req = mysqli_query( $this->conn, "SELECT RIGHT( MAX( $id_key ), 3 ) max_val FROM $table WHERE $id_key LIKE '$prefix%'" );
+			$req = mysqli_query( $this->conn, "SELECT MAX( NO ) max_val FROM anggota_tbl WHERE 1" );
 			$this->rows = mysqli_fetch_array( $req );
 			if ( mysqli_num_rows( $req ) > 0 ) {
 				$inc_num = (int)$this->rows[0] + 1;
-				$new_id = $prefix . "-00" . (string)$inc_num;
+				$new_id = str_pad($inc_num, 4, '0', STR_PAD_LEFT);
 				return $new_id;
 			} else {
 				throw new Exception( mysqli_error( $this->conn ) );
@@ -177,4 +177,4 @@ class Class_DataTables_CRUD {
 		return false;
 	}
 
-}
+};

@@ -26,7 +26,7 @@ $query = "SELECT a.kode_auk,
   if ( isset( $_POST["order"] ) ) {
   	$query .= 'ORDER BY '.$_POST['order']['0']['column'].' '.$_POST['order']['0']['dir'].' ';
   } else {
-  	$query .= 'ORDER BY a.kode_auk ASC';
+  	$query .= 'ORDER BY kode_auk ASC';
   }
 
   if ( isset( $_POST["length"] ) && $_POST["length"] != -1 ) {
@@ -53,7 +53,7 @@ $rows = json_decode( $result, true );
 	}
 
   $filtered_rows = count( $rows );
-  $rows_cnt = $conn->get_total_all_records( "anggota_tbl" );
+  $rows_cnt = $conn->get_total_all_records( "ditolak_tbl" );
 
 	$output = array(
 		"draw"						=>	( isset( $_POST["draw"] ) ? intval( $_POST["draw"] ) : 0 ),
