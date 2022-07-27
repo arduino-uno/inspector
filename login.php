@@ -118,11 +118,11 @@ $('form').on('submit', function(e){
             timeout: 600000,
             success: function ( response ) {
                 if ( response == "TRUE" ) {
-                  $('#success').trigger("play");
+                  $("#success").trigger("play");
                   toastr.info("Login Success!");
                   window.setTimeout(function(){ window.location.href = "./media.php?module=dashboard"; },2000);
                 } else {
-                  $('#error').trigger("play");
+                  $("#error").trigger("play");
                   toastr.error("Incorrect username or password combination");
                   window.setTimeout(function(){ location.reload() },2000);
                 }
