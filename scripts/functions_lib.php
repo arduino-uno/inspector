@@ -11,12 +11,23 @@ function getConnection() {
 };
 
 function is_admin() {
-  session_start();
-  $role = $_SESSION['user_role'];
+  	session_start();
+  	$role = $_SESSION['user_role'];
 
-  if ( $role != 'administrator' )
-    return FALSE;
-  return TRUE;
+  	if ( $role != 'administrator' )
+    	return FALSE;
+  	return TRUE;
+};
+
+function generate_reg_ID() {
+		global $conn;
+		$req = mysqli_query( $conn, "SELECT COUNT( NO ) max_val FROM anggota_tbl" );
+		$rows = mysqli_fetch_array( $req );
+		if ( mysqli_num_rows( $req ) > 0 ) {
+		    $inc_num = (int)$rows[0] + 1;
+				$new_id = str_pad($inc_num, 4, '0', STR_PAD_LEFT);
+				return $new_id;
+		}
 };
 
 function logout() {

@@ -265,9 +265,7 @@ if (!$AVAILABLE_PAGES[$module]) {
                with font-awesome or any other icon font library -->
 				<?php
 				if ( is_admin() ) {
-					echo "<li class='nav-item menu-open'>
-            <ul class='nav nav-treeview'>
-              <li class='nav-item'>
+					echo "<li class='nav-item'>
                 <a href='./media.php?module=dashboard' class='nav-link'>
                   <i class='fas fa-tachometer-alt nav-icon'></i>
                   <p>Dashboard v1</p>
@@ -285,13 +283,9 @@ if (!$AVAILABLE_PAGES[$module]) {
                   <i class='fa fa-list-alt nav-icon'></i>
                   <p>MI DataTables</p>
                 </a>
-              </li>
-            </ul>
-          </li>";
+              </li>";
 				} else {
-					echo "<li class='nav-item menu-open'>
-            <ul class='nav nav-treeview'>
-              <li class='nav-item'>
+					echo "<li class='nav-item'>
                 <a href='./media.php?module=dashboard' class='nav-link'>
                   <i class='fas fa-tachometer-alt nav-icon'></i>
                   <p>Dashboard v2</p>
@@ -332,9 +326,7 @@ if (!$AVAILABLE_PAGES[$module]) {
 		                </a>
 		              </li>
 		            </ul>
-		          </li>
-            </ul>
-          </li>";
+		          </li>";
 				}; ?>
   				<li class="nav-header">LOGOUT</li>
 					<li class="nav-item">
@@ -666,7 +658,29 @@ if (!$AVAILABLE_PAGES[$module]) {
 <script src="./plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- Page specific script -->
 <script type="text/javascript">
+var kode_auk = "<?php echo $_SESSION['user_id']; ?>";
+
 $(function () {
+
+		var queryString = (new URL(location.href)).searchParams.get('module');
+
+		function checkforText(requiredText) {
+			let found = false;
+
+			$("ul.nav.nav-pills.nav-sidebar.flex-column li.nav-item").each(function(e) {
+					var txt_url = $(this).find("a").attr("href")
+					let txt_mod = txt_url.split("=")[1];
+
+					if (txt_mod == requiredText) {
+							found = true;
+							$(this).find("a.nav-link").addClass("active");
+					}
+			});
+
+			return found;
+		};
+
+		let found = checkforText(queryString);
 
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -699,16 +713,16 @@ $(function () {
 
 	};
 
-	function logoutModal() {
-			$("#logout_modal").modal("show");
-	};
-
-	function confirmLogout() {
-			$('#logout').trigger("play");
-			window.setTimeout(function(){ window.location.href = "./scripts/logout.php"; },5000);
-	};
-
 });
+
+function logoutModal() {
+		$("#logout_modal").modal("show");
+};
+
+function confirmLogout() {
+		$('#logout').trigger("play");
+		window.setTimeout(function(){ window.location.href = "./scripts/logout.php"; },5000);
+};
 </script>
 <?php
 if ( $module == 'dashboard' ){

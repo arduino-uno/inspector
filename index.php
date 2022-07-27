@@ -23,6 +23,8 @@ $conn->getConnection();
 <link rel="stylesheet" href="./plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Toastr -->
 <link rel="stylesheet" href="./plugins/toastr/toastr.min.css">
+<!-- Daterange picker -->
+<link rel="stylesheet" href="./plugins/daterangepicker/daterangepicker.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="./dist/css/adminlte.min.css">
 <style>
@@ -383,11 +385,14 @@ body{background-color:grey}
 <audio id="success" src="./sounds/KDE_Chimes_2.ogg"></audio>
 <!-- jQuery -->
 <script src="./plugins/jquery/jquery.min.js"></script>
-<script src="./plugins/popper/popper.min.js"></script>
+<script type="module" src="./plugins/popper/popper.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Toastr -->
 <script src="./plugins/toastr/toastr.min.js"></script>
+<!-- InputMask -->
+<script src="./plugins/moment/moment.min.js"></script>
+<script src="./plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- AdminLTE App -->
 <script src="./dist/js/adminlte.min.js"></script>
 <script>
@@ -511,15 +516,17 @@ $(document).on("click", ".navbar-right .dropdown-menu", function(e){
             timeout: 600000,
             success: function ( response ) {
   							if ( response == "true" ) {
+                  $("#success").trigger("play");
   				    		toastr.info('Data Anda berhasil disimpan.');
   								// email_confirm(name, email, title, message);
   							} else {
+                  $("#error").trigger("play");
   								toastr.error('Ada kendala pada server kami.');
   							}
             }
         });
 
-  			window.setTimeout(function(){location.reload()},20000);
+  			window.setTimeout(function(){location.reload()},3000);
     });
 </script>
 </body></html>

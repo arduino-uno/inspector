@@ -159,7 +159,7 @@ class Class_DataTables_CRUD {
 	public function get_newid() {
 
 		try {
-			$req = mysqli_query( $this->conn, "SELECT MAX( NO ) max_val FROM anggota_tbl WHERE 1" );
+			$req = mysqli_query( $this->conn, "SELECT COUNT( NO ) max_val FROM anggota_tbl" );
 			$this->rows = mysqli_fetch_array( $req );
 			if ( mysqli_num_rows( $req ) > 0 ) {
 				$inc_num = (int)$this->rows[0] + 1;

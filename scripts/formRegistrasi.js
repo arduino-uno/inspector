@@ -87,9 +87,11 @@ $("#form_register").submit( function(e) {
         timeout: 600000,
         success: function ( response ) {
             if ( response == "true" ) {
+              $("#success").trigger("play");
               toastr.info('Data Anda berhasil disimpan.');
               // email_confirm(name, email, title, message);
             } else {
+              $("#error").trigger("play");
               toastr.error('Ada kendala pada server kami.');
             }
         }

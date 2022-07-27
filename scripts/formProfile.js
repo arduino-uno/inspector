@@ -1,3 +1,9 @@
+var QueryString = (new URL(location.href)).searchParams.get('module');
+
+if ( QueryString == "profile" ) {
+    profile_detail(kode_auk);
+};
+
 function profile_detail( member_id ) {
    $.ajax({
         method: 'POST',
